@@ -1,4 +1,3 @@
-import { MatLuxonDateAdapterOptions } from '@angular/material-luxon-adapter';
 import { MatBottomSheetConfig } from '@angular/material/bottom-sheet';
 import { MatDateFormats } from '@angular/material/core';
 import { MatDialogConfig } from '@angular/material/dialog';
@@ -38,9 +37,6 @@ export const MAT_FORM_FIELD_CUSTOM_CONFIG: MatFormFieldDefaultOptions = {
   subscriptSizing: 'dynamic',
 };
 
-export const MAT_LUXON_DATE_CUSTOM_CONFIG: Partial<MatLuxonDateAdapterOptions> = {
-  firstDayOfWeek: 1,
-};
 
 export const MAT_PAGINATOR_CUSTOM_CONFIG: MatPaginatorDefaultOptions = {
   pageSize: 10,
