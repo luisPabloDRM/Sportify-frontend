@@ -3,9 +3,9 @@ import { Pagination, PaginationFilterType, PaginationValues } from './pagination
 import { HttpParams } from '@angular/common/http';
 import { DateTime } from 'luxon';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PAGINATION_COMMON_PROPERTIES } from 'src/app/shared/utils/pagination/pagination.constants';
-import { HttpService } from 'src/app/core/services/http/http.service';
 import * as R from 'remeda';
+import { PAGINATION_COMMON_PROPERTIES } from './pagination.constants';
+import { HttpService } from '../../../core/services/http/http.service';
 
 @Injectable({
   providedIn: 'root',

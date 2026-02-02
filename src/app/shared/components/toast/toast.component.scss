@@ -1,0 +1,25 @@
+@use 'theme.scss';
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 0.5rem;
+  margin: 0;
+  &.success {
+    color: theme.get-success(200);
+  }
+  &.error {
+    color: theme.get-error(200);
+  }
+  &.warning {
+    color: theme.get-warning(200);
+  }
+  &.info {
+    color: theme.get-info(200);
+  }
+}
+mat-icon {
+  font-size: 1.25rem;
+  height: 1.25rem;
+}
