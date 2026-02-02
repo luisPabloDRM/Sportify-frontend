@@ -1,4 +1,3 @@
-@use 'theme.scss';
 
 .wrapper {
   align-items: center;
@@ -7,16 +6,16 @@
   gap: 0.5rem;
   margin: 0;
   &.success {
-    color: theme.get-success(200);
+    color:green;
   }
   &.error {
-    color: theme.get-error(200);
+    color: red;
   }
   &.warning {
-    color: theme.get-warning(200);
+    color:yellow;
   }
   &.info {
-    color: theme.get-info(200);
+    color:aqua;
   }
 }
 mat-icon {

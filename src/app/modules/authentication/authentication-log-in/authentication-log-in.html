@@ -1,1 +1,26 @@
-<p>authentication-log-in works!</p>
+<h1>Bienvenido a Sportly</h1>
+<form [formGroup]="form" (submit)="submit()">
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input type="text" formControlName="email" autocomplete="email"/>
+        <mat-icon>email</mat-icon>
+        <mat-hint>Obligatorio</mat-hint>
+        <mat-error controlName="email"></mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Contraseña</mat-label>
+        <input type="password" formControlName="password" autocomplete="current-password"/>
+        <mat-icon>password</mat-icon>
+        <mat-hint>Obligatorio</mat-hint>
+        <mat-error controlName="email"></mat-error>
+    </mat-form-field>
+    <button mat-raised-button>
+        <mat-icon>login</mat-icon>
+        <span>Inicial sesión</span>
+    </button>
+</form>
+<footer>
+    <a  [routerLink]="['/authentication', 'request-recovery']">
+        ¿Has olvidado tu contraseña? Pulsa este enlace para recuperar el accesso
+    </a>
+</footer>

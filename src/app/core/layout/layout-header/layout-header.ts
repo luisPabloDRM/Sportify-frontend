@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MaterialModule } from '../../../../shared/material/material.module';
+import { MaterialModule } from '../../../shared/material/material.module';
 
 @Component({
   selector: 'app-layout-header',

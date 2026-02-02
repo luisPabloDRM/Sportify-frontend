@@ -6,6 +6,8 @@ import { AuthUser } from '../../../core/services/auth-user/auth-user';
 import { ToastService } from '../../../shared/components/toast/toast.service';
 import { Router } from '@angular/router';
 import { PasswordRecoveryRequestDTO } from '../../password-recoveries/models/password-recoveries.models';
+import { AuthLogInRequest } from '../models/authentication.models';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +29,17 @@ export class AuthenticationDomain {
     private readonly router: Router,
     private readonly toastService: ToastService,
   ) {}
+
+  logIn = (data: AuthLogInRequest) => {
+    return this.authenticationApiService.logIn(data).pipe(
+      tap((auth) => this.authUser.set(auth)),
+      catchError((error: HttpErrorResponse) => {
+        const { message} = error.error;
+        this.toastService.error(message)
+        throw error;
+      })
+    )
+  }
 
   logOut = () => {
     this.authUser.delete();
@@ -53,7 +66,7 @@ export class AuthenticationDomain {
     return this.authUser.verifyRefreshIsRequired();
   };
 
-  verifyRefreshIsRequired = () => {
+  verifyRefreshIsExpired = () => {
     return this.authUser.verifyRefreshIsExpired();
   };
 
