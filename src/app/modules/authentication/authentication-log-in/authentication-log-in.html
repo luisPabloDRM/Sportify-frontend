@@ -1,26 +1,35 @@
 <h1>Bienvenido a Sportly</h1>
-<form [formGroup]="form" (submit)="submit()">
-    <mat-form-field>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+    <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
-        <input type="text" formControlName="email" autocomplete="email"/>
-        <mat-icon>email</mat-icon>
+        <input matInput type="text" formControlName="email" autocomplete="email" />
+        <mat-icon matSuffix>email</mat-icon>
         <mat-hint>Obligatorio</mat-hint>
-        <mat-error controlName="email"></mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('required')">
+            El email es obligatorio
+        </mat-error>
     </mat-form-field>
-    <mat-form-field>
+
+    <mat-form-field appearance="outline">
         <mat-label>Contraseña</mat-label>
-        <input type="password" formControlName="password" autocomplete="current-password"/>
-        <mat-icon>password</mat-icon>
+        <input matInput type="password" formControlName="password" autocomplete="current-password" />
+        <mat-icon matSuffix>lock</mat-icon>
         <mat-hint>Obligatorio</mat-hint>
-        <mat-error controlName="email"></mat-error>
+        <mat-error *ngIf="form.get('password')?.hasError('required')">
+            La contraseña es obligatoria
+        </mat-error>
     </mat-form-field>
-    <button mat-raised-button>
+
+    <button mat-raised-button type="submit">
         <mat-icon>login</mat-icon>
-        <span>Inicial sesión</span>
+        <span>Iniciar sesión</span>
     </button>
 </form>
+
 <footer>
-    <a  [routerLink]="['/authentication', 'request-recovery']">
-        ¿Has olvidado tu contraseña? Pulsa este enlace para recuperar el accesso
+    <a class="recovery-link" [routerLink]="['/authentication', 'request-recovery']">
+        ¿Has olvidado tu contraseña? Pulsa este enlace para recuperar el acceso
     </a>
 </footer>

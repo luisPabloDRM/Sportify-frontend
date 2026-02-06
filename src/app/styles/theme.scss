@@ -1,0 +1,254 @@
+// =====================
+// PRIMARY (Azul deportivo)
+// =====================
+$primary-contrast: (
+  100: #1f2933,
+  200: #1f2933,
+  300: #1f2933,
+  400: #1f2933,
+  500: #ffffff,
+  600: #ffffff,
+  700: #ffffff,
+  800: #ffffff,
+  900: #ffffff,
+);
+
+$primary: (
+  100: #e6f4ff,
+  200: #bfe3ff,
+  300: #7cc4ff,
+  400: #3aa3ff,
+  500: #0b84f3,
+  600: #0a76d6,
+  700: #0863b4,
+  800: #064f91,
+  900: #043665,
+  contrast: $primary-contrast,
+);
+
+// =====================
+// ACCENT (Naranja energía)
+// =====================
+$accent-contrast: (
+  100: #1f2933,
+  200: #1f2933,
+  300: #1f2933,
+  400: #1f2933,
+  500: #ffffff,
+  600: #ffffff,
+  700: #ffffff,
+  800: #ffffff,
+  900: #ffffff,
+);
+
+$accent: (
+  100: #ffe8db,
+  200: #ffc7a8,
+  300: #ffa36f,
+  400: #ff8742,
+  500: #ff6b1a,
+  600: #e85e14,
+  700: #c94f0f,
+  800: #a83f0b,
+  900: #6f2907,
+  contrast: $accent-contrast,
+);
+
+// =====================
+// SUCCESS (Verde fitness)
+// =====================
+$success-contrast: (
+  100: #1f2933,
+  200: #1f2933,
+  300: #1f2933,
+  400: #1f2933,
+  500: #ffffff,
+  600: #ffffff,
+  700: #ffffff,
+  800: #ffffff,
+  900: #ffffff,
+);
+
+$success: (
+  100: #e6f7ed,
+  200: #bdf0d1,
+  300: #8be6b0,
+  400: #4fd38a,
+  500: #22c55e,
+  600: #1fb152,
+  700: #188f43,
+  800: #136f34,
+  900: #0d4a23,
+  contrast: $success-contrast,
+);
+
+// =====================
+// ERROR (Rojo moderno)
+// =====================
+$error-contrast: (
+  100: #1f2933,
+  200: #1f2933,
+  300: #ffffff,
+  400: #ffffff,
+  500: #ffffff,
+  600: #ffffff,
+  700: #ffffff,
+  800: #ffffff,
+  900: #ffffff,
+);
+
+$error: (
+  100: #fde8e8,
+  200: #fbbcbc,
+  300: #f98080,
+  400: #f24b4b,
+  500: #ef4444,
+  600: #d73737,
+  700: #b12b2b,
+  800: #8f2323,
+  900: #631919,
+  contrast: $error-contrast,
+);
+
+// =====================
+// WARNING (Ámbar)
+// =====================
+$warning-contrast: (
+  100: #1f2933,
+  200: #1f2933,
+  300: #1f2933,
+  400: #1f2933,
+  500: #1f2933,
+  600: #1f2933,
+  700: #ffffff,
+  800: #ffffff,
+  900: #ffffff,
+);
+
+$warning: (
+  100: #fff4cc,
+  200: #ffe299,
+  300: #ffcc5c,
+  400: #ffb703,
+  500: #f59e0b,
+  600: #d48806,
+  700: #b26b04,
+  800: #8f5203,
+  900: #5f3601,
+  contrast: $warning-contrast,
+);
+
+// =====================
+// INFO (Neutros modernos)
+// =====================
+$info-contrast: (
+  100: #1f2933,
+  200: #1f2933,
+  300: #1f2933,
+  400: #1f2933,
+  500: #1f2933,
+  600: #1f2933,
+  700: #1f2933,
+  800: #ffffff,
+  900: #ffffff,
+);
+
+$info: (
+  100: #f5f7fa,
+  200: #e4e7eb,
+  300: #d2d6dc,
+  400: #bcc2cc,
+  500: #9aa5b1,
+  600: #7b8794,
+  700: #616e7c,
+  800: #52606d,
+  900: #3e4c59,
+  contrast: $info-contrast,
+);
+
+// =====================
+// DARK (Oscuros modernos)
+// =====================
+$dark-contrast: (
+  100: #ffffff,
+  200: #ffffff,
+  300: #ffffff,
+  400: #ffffff,
+  500: #ffffff,
+  600: #ffffff,
+  700: #ffffff,
+  800: #ffffff,
+  900: #ffffff,
+);
+
+$dark: (
+  100: #6b7280,
+  200: #4b5563,
+  300: #374151,
+  400: #1f2933,
+  500: #111827,
+  600: #0f172a,
+  700: #0b1220,
+  800: #070c16,
+  900: #020617,
+  contrast: $dark-contrast,
+);
+
+// =====================
+// FUNCTIONS (sin cambios)
+// =====================
+@function get-primary($density: 500, $contrast: false) {
+  @if $contrast {
+    @return map-get($primary-contrast, $density);
+  } @else {
+    @return map-get($primary, $density);
+  }
+}
+
+@function get-accent($density: 500, $contrast: false) {
+  @if $contrast {
+    @return map-get($accent-contrast, $density);
+  } @else {
+    @return map-get($accent, $density);
+  }
+}
+
+@function get-success($density: 500, $contrast: false) {
+  @if $contrast {
+    @return map-get($success-contrast, $density);
+  } @else {
+    @return map-get($success, $density);
+  }
+}
+
+@function get-error($density: 500, $contrast: false) {
+  @if $contrast {
+    @return map-get($error-contrast, $density);
+  } @else {
+    @return map-get($error, $density);
+  }
+}
+
+@function get-warning($density: 500, $contrast: false) {
+  @if $contrast {
+    @return map-get($warning-contrast, $density);
+  } @else {
+    @return map-get($warning, $density);
+  }
+}
+
+@function get-info($density: 500, $contrast: false) {
+  @if $contrast {
+    @return map-get($info-contrast, $density);
+  } @else {
+    @return map-get($info, $density);
+  }
+}
+
+@function get-dark($density: 500, $contrast: false) {
+  @if $contrast {
+    @return map-get($dark-contrast, $density);
+  } @else {
+    @return map-get($dark, $density);
+  }
+}

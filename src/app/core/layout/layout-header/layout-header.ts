@@ -9,5 +9,9 @@ import { MaterialModule } from '../../../shared/material/material.module';
   styleUrl: './layout-header.scss',
 })
 export class LayoutHeader {
+  isMenuOpen = false;
 
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 }

@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './layout-footer.scss',
 })
 export class LayoutFooter {
-
+ protected year = new Date().getFullYear();
 }

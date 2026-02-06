@@ -1,0 +1,17 @@
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <span>SPORTLY</span>
+        </div>
+
+        <button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle menu">
+            ☰
+        </button>
+
+        <nav class="nav" [class.open]="isMenuOpen">
+            <a routerLink="/dashboard">Dashboard</a>
+            <a routerLink="/dashboard/users">Users</a>
+            <a routerLink="/authentication/log-in">Login</a>
+        </nav>
+    </div>
+</header>

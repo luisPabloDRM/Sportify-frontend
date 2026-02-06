@@ -6,6 +6,7 @@ import { LayoutMenu } from './layout-menu/layout-menu';
 
 @Component({
   selector: 'app-layout',
+  standalone: true,
   imports: [RouterOutlet, LayoutHeader, LayoutFooter, LayoutMenu],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',

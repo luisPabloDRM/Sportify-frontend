@@ -6,6 +6,7 @@ import { Authentication } from '../../modules/authentication/authentication';
 import { authGuard } from '../guards/auth-guard';
 import { Permission } from '../../modules/roles/constants/roles.constants';
 import { Users } from '../../modules/users/users';
+import { permissionGuard } from '../guards/permission-guard';
 
 export const routes: Routes = [
   {
@@ -15,6 +16,7 @@ export const routes: Routes = [
       const authUserService = inject(AuthUser);
       const router = inject(Router);
       const user = authUserService.get()?.user;
+      console.log("user", user)
 
       const url = user ? '/dashboard' : 'authentication';
       return router.parseUrl(url);
@@ -39,9 +41,9 @@ export const routes: Routes = [
 
           switch (true) {
             case authUserService.hasPermission(Permission.ReadUsers):
-              return router.parseUrl('/dasboard/users');
+              return router.parseUrl('/dashboard/users');
             default:
-              return router.parseUrl('dashboard/profile');
+              return router.parseUrl('/dashboard/profile');
           }
         },
       },
@@ -50,12 +52,13 @@ export const routes: Routes = [
             component: Profile,
             loadChildren: () => import('./profile.routes').then((m) => m.routes)
         }, */
-/*       {
+      {
         path: 'users',
         component: Users,
         canActivate: [permissionGuard(Permission.ReadUsers)],
         loadChildren: () => import('./users.routes').then((m) => m.routes),
       },
+      /* 
       {
         path: 'log-ins',
         component: LogIns,
@@ -66,6 +69,9 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    loadComponent: () => import('../../shared/components/page-not-found/page-not-found.component').then((c) => c.PageNotFoundComponent)
-  }
+    loadComponent: () =>
+      import('../../shared/components/page-not-found/page-not-found.component').then(
+        (c) => c.PageNotFoundComponent,
+      ),
+  },
 ];

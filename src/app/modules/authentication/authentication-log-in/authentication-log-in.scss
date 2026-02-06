@@ -1,0 +1,26 @@
+@use 'theme.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+}
+h1 {
+  color: theme.get-accent();
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin: 0;
+}
+form{
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+}
+button {
+    margin-top: 1rem;
+}
+.recovery-link {
+    display: block;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
