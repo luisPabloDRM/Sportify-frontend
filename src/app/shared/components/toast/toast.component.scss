@@ -1,0 +1,24 @@
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 0.5rem;
+  margin: 0;
+  &.success {
+    color:green;
+  }
+  &.error {
+    color: red;
+  }
+  &.warning {
+    color:yellow;
+  }
+  &.info {
+    color:aqua;
+  }
+}
+mat-icon {
+  font-size: 1.25rem;
+  height: 1.25rem;
+}

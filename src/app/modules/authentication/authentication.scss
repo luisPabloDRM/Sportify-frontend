@@ -1,0 +1,42 @@
+@use 'theme.scss';
+
+:host {
+  align-items: center;
+  background: linear-gradient(135deg, theme.get-dark(300), theme.get-dark(500));
+  background-image: url('../../../assets/images/hero/hero.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1 rem;
+  @media all and (min-width: 768px) {
+    padding: 1.5rem;
+  }
+  @media all and (min-width: 1268px) {
+    padding: 2rem;
+  }
+}
+section {
+  background-color: white;
+  border: 1px solid rgb(0 0 0 / 25%);
+  border-radius: 4px;
+  box-shadow: 0px 0px 8px -2px rgb(0 0 0 / 50%);
+  display: flex;
+  flex-flow: column nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 2rem;
+  width: calc(450px + 4rem);
+}
+img {
+  align-self: center;
+  height: calc(4rem + 7.5vh);
+  max-height: 8rem;
+  object-fit: contain;
+  object-position: center;
+  margin-bottom: 2rem;
+}
+

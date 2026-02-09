@@ -1,1 +1,81 @@
-/* You can add global styles to this file, and also import other style files */
+
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+@use 'palette.scss';
+@use 'theme.scss';
+
+$font-family: 'Titillium Web', 'Helvetica Neue', 'Arial', sans-serif;
+
+$theme-config: (
+  color: (
+    primary: palette.$primary-palette,
+    theme-type: light,
+  ),
+  typography: (
+    brand-family: $font-family,
+    plain-family: $font-family,
+    bold-weight: 700,
+    medium-weight: 600,
+    regular-weight: 400,
+  ),
+  density: (
+    scale: 0,
+  ),
+);
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  color-scheme: light;
+  height: 100%;
+  font-family: $font-family;
+  line-height: 1.5;
+
+  @include mat.theme($theme-config);
+}
+
+body {
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  height: 100%;
+  margin: 0;
+}
+
+button {
+  background: unset;
+  border: unset;
+  font-family: $font-family;
+  cursor: pointer;
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+}
+
+input {
+  font-family: $font-family;
+}
+
+table {
+  th,
+  td {
+    max-width: 1px;
+    text-overflow: ellipsis;
+    white-space: pre;
+
+    &.actions {
+      max-width: unset;
+      text-overflow: unset;
+      white-space: normal;
+      width: 1px;
+    }
+  }
+}
