@@ -4,8 +4,9 @@ import { MaterialModule } from '../../../shared/material/material.module';
 import { AuthenticationDomain } from '../services/authentication-domain';
 import { Router, RouterLink } from '@angular/router';
 import { LOG_IN_FORM } from '../constants/authentication.constants';
-import { first } from 'rxjs';
+import { first, finalize } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-authentication-log-in',
@@ -27,8 +28,6 @@ export class AuthenticationLogIn implements OnDestroy {
     this.form.reset();
   }
 
-
-
   protected submit = () => {
     if (this.form.invalid || this.loading()) {
       return;
@@ -42,11 +41,7 @@ export class AuthenticationLogIn implements OnDestroy {
       .subscribe({
         next: () => {
           this.router.navigate(['/dashboard']);
-          this.loading.set(false);
-        },
-        error: () => {
-          this.loading.set(false);
-        },
+        }
       });
   };
 }

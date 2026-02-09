@@ -1,6 +1,4 @@
-// =====================
-// PRIMARY (Azul deportivo)
-// =====================
+
 $primary-contrast: (
   100: #1f2933,
   200: #1f2933,
@@ -26,9 +24,6 @@ $primary: (
   contrast: $primary-contrast,
 );
 
-// =====================
-// ACCENT (Naranja energía)
-// =====================
 $accent-contrast: (
   100: #1f2933,
   200: #1f2933,
@@ -54,9 +49,6 @@ $accent: (
   contrast: $accent-contrast,
 );
 
-// =====================
-// SUCCESS (Verde fitness)
-// =====================
 $success-contrast: (
   100: #1f2933,
   200: #1f2933,
@@ -82,9 +74,6 @@ $success: (
   contrast: $success-contrast,
 );
 
-// =====================
-// ERROR (Rojo moderno)
-// =====================
 $error-contrast: (
   100: #1f2933,
   200: #1f2933,
@@ -110,9 +99,6 @@ $error: (
   contrast: $error-contrast,
 );
 
-// =====================
-// WARNING (Ámbar)
-// =====================
 $warning-contrast: (
   100: #1f2933,
   200: #1f2933,
@@ -138,9 +124,6 @@ $warning: (
   contrast: $warning-contrast,
 );
 
-// =====================
-// INFO (Neutros modernos)
-// =====================
 $info-contrast: (
   100: #1f2933,
   200: #1f2933,
@@ -166,9 +149,6 @@ $info: (
   contrast: $info-contrast,
 );
 
-// =====================
-// DARK (Oscuros modernos)
-// =====================
 $dark-contrast: (
   100: #ffffff,
   200: #ffffff,
@@ -194,9 +174,6 @@ $dark: (
   contrast: $dark-contrast,
 );
 
-// =====================
-// FUNCTIONS (sin cambios)
-// =====================
 @function get-primary($density: 500, $contrast: false) {
   @if $contrast {
     @return map-get($primary-contrast, $density);

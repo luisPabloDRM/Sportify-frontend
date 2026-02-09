@@ -6,7 +6,8 @@ import { Permission } from "../../modules/roles/constants/roles.constants";
 export const routes: Routes = [
     {
         path: '',
-        component: Users
+        pathMatch: 'full',
+        redirectTo: 'overview'
     },
    {
         path: 'overview',

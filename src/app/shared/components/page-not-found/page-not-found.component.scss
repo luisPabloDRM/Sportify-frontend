@@ -1,8 +1,8 @@
-
+@use 'theme.scss';
 
 :host {
   align-items: center;
-  background: linear-gradient(135deg, rgb(213, 219, 219), rgb(224, 233, 233));
+  background: linear-gradient(135deg, theme.get-info(100), theme.get-info(200));
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;

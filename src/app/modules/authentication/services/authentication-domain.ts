@@ -34,12 +34,12 @@ export class AuthenticationDomain {
     return this.authenticationApiService.logIn(data).pipe(
       tap((auth) => this.authUser.set(auth)),
       catchError((error: HttpErrorResponse) => {
-        const { message} = error.error;
-        this.toastService.error(message)
+        const { message } = error.error;
+        this.toastService.error(message);
         throw error;
-      })
-    )
-  }
+      }),
+    );
+  };
 
   logOut = () => {
     this.authUser.delete();
@@ -71,6 +71,6 @@ export class AuthenticationDomain {
   };
 
   verifyTokenIsExpired = () => {
-    return this.authUser.verifyTokenIsExpired()
-  }
+    return this.authUser.verifyTokenIsExpired();
+  };
 }
