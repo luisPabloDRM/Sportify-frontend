@@ -7,6 +7,7 @@ import { authGuard } from '../guards/auth-guard';
 import { Permission } from '../../modules/roles/constants/roles.constants';
 import { Users } from '../../modules/users/users';
 import { permissionGuard } from '../guards/permission-guard';
+import { SportsEvents } from '../../modules/sports-events/sports-events';
 
 export const routes: Routes = [
   {
@@ -16,7 +17,7 @@ export const routes: Routes = [
       const authUserService = inject(AuthUser);
       const router = inject(Router);
       const user = authUserService.get()?.user;
-      console.log("user", user)
+      console.log('user', user);
 
       const url = user ? '/dashboard' : 'authentication';
       return router.parseUrl(url);
@@ -41,7 +42,7 @@ export const routes: Routes = [
 
           switch (true) {
             case authUserService.hasPermission(Permission.ReadUsers):
-              return router.parseUrl('/dashboard/users');
+              return router.parseUrl('/dashboard/sports-events');
             default:
               return router.parseUrl('/dashboard/profile');
           }
@@ -57,6 +58,12 @@ export const routes: Routes = [
         component: Users,
         canActivate: [permissionGuard(Permission.ReadUsers)],
         loadChildren: () => import('./users.routes').then((m) => m.routes),
+      },
+      {
+        path: 'sports-events',
+        component: SportsEvents,
+        canActivate: [permissionGuard(Permission.ReadUsers), ],
+        loadChildren: () => import('./sports-events.routes').then((m) => m.routes),
       },
       /* 
       {

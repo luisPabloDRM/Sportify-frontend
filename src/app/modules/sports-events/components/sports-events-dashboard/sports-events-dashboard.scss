@@ -1,0 +1,45 @@
+.sports-section {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.section-title {
+  margin-bottom: 2rem;
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.sports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 24px;
+}
+
+.sport-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 12px;
+  padding: 1rem;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+}
+
+.image-container img {
+  max-height: 100px;
+  object-fit: contain;
+}
+
+.sport-title {
+  margin-top: 1rem;
+  font-size: 16px;
+  font-weight: 500;
+}
