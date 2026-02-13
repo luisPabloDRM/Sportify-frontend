@@ -3,19 +3,23 @@
     <h2 class="section-title">Sports available</h2>
 
     <div class="sports-grid">
-        <mat-card class="sport-card">
+        @for (sport of vm.sports(); track $index) {
+        <mat-card class="sport-card" (click)="goToSport(sport)">
+
+
 
             <div class="image-container">
-                <img mat-card-image  />
-            </div>
+                <img mat-card-image [src]="sport.icon" />
+             </div>
 
-            <mat-card-content>
-                <h3 class="sport-title">
-                    NAme
-                </h3>
-            </mat-card-content>
+                <mat-card-content>
+                    <h3 class="sport-title">
+                        {{sport.name}}
+                    </h3>
+                </mat-card-content>
 
         </mat-card>
+        }
     </div>
 
 </section>
