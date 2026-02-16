@@ -1,60 +1,65 @@
-import { DateTime } from 'luxon'
-import { SportEntityDTO } from '../sports/sports_interfaces.js'
-import { Nullish } from '#types/global'
-import { UserEntityDTO } from '#users/users_interfaces'
+import { DateTime } from 'luxon';
+import { UserEntityParsedDTO } from '../../users/models/users.models';
+import { SportEntityParsedDTO } from '../../sports/models/sports.models';
 
-export type SportEventEntityDTO = {
-  id: number
-  name: string
-  location: string
-  eventDate: DateTime
-  maxPlayers: number
-  minPlayers: number
-  isUserCreator: boolean
-  sportId: number
-  sport: SportEntityDTO
-  confirmed: boolean
-  users: Array<Pick<UserEntityDTO, 'id' | 'isUserCreator' | 'fullname'>>
-  createdAt: DateTime
-  updatedAt: DateTime
-}
+export type SportEventEntityPlainDTO = {
+  id: number;
+  name: string;
+  location: string;
+  eventDate: string;
+  maxPlayers: number;
+  minPlayers: number;
+  isUserCreator: boolean;
+  sportId: number;
+  sport: SportEntityParsedDTO;
+  confirmed: boolean;
+  users: Array<Pick<UserEntityParsedDTO, 'id' | 'fullname'>>;
+  createdAt: string;
+  updatedAt: string;
+};
+export type SportEventEntityParsedDTO = Omit<SportEventEntityPlainDTO, 'createdAt' | 'updatedAt'> & {
+  createdAt: DateTime;
+  updatedAt: DateTime;
+};
 
 export type SportEventCreateRawDTO = Pick<
-  SportEventEntityDTO,
+  SportEventEntityPlainDTO,
   'location' | 'isUserCreator' | 'eventDate' | 'name' | 'sportId' | 'minPlayers' | 'maxPlayers'
->
+>;
 export type SportEventCreateProcessedDTO = Pick<
-  SportEventEntityDTO,
+  SportEventEntityPlainDTO,
   'location' | 'eventDate' | 'name' | 'sportId' | 'minPlayers' | 'maxPlayers'
 > & {
-  users: Array<Pick<UserEntityDTO, 'id' | 'isUserCreator'>>
-}
+  users: Array<Pick<UserEntityParsedDTO, 'id'>>;
+};
 
 export type SportEventUpdateRawDTO = Pick<
-  SportEventEntityDTO,
+  SportEventEntityPlainDTO,
   'location' | 'eventDate' | 'name' | 'sportId' | 'minPlayers' | 'maxPlayers'
->
+>;
 
 export type SportEventUpdateProcessedDTO = Pick<
-  SportEventEntityDTO,
+  SportEventEntityPlainDTO,
   'location' | 'eventDate' | 'name' | 'sportId' | 'minPlayers' | 'maxPlayers'
 > & {
-  users: Array<number>
-}
+  users: Array<number>;
+};
 
-export type SportEventPaginatedDTO = Pick<
-  SportEventEntityDTO,
-  'id' | 'location' | 'name' | 'eventDate' | 'sportId' | 'minPlayers' | 'maxPlayers'
-> & { sportName: string }
+export type SportEventPaginatedPlainDTO = Pick<
+  SportEventEntityPlainDTO,
+  'id' | 'location' | 'name' | 'eventDate' | 'sportId' | 'minPlayers' | 'maxPlayers' | 'createdAt'
+> & { sportName: string };
 
-export type SportEventFilterDTO = Nullish<{
-  id: number
-  location: string
-  eventDate: DateTime
-  name: string
-  nameExact: string
-  sportId: number
-  sportName: string
-  confirmed: boolean
-  usersIds: number[]
-}>
+export type SportEventPaginatedParsedDTO = SportEventPaginatedPlainDTO
+
+export type SportEventFilterDTO = Partial<{
+  id: number;
+  location: string;
+  eventDate: DateTime;
+  name: string;
+  nameExact: string;
+  sportId: number;
+  sportName: string;
+  confirmed: boolean;
+  usersIds: number[];
+}>;
