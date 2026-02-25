@@ -1,1 +1,28 @@
-<p>sports-events-overview works!</p>
+<header>
+  <h2>Listado de eventos disponibles para <strong>{{vm.sports().name}}</strong></h2>
+  <div class="actions">
+    <a mat-raised-button (click)="create()">
+      <mat-icon>add</mat-icon>
+      <span>Nuevo Evento</span>
+    </a>
+  </div>
+</header>
+@if (vm.sportEvents(); as sportsEvents) {
+  <app-overview [pagination]="vm.pagination">
+    <ng-container>
+      <app-sports-events-overview-items
+      [sportsEvents]="sportsEvents.data"
+      [isSendingRequest]="vm.isSendingRequest()"
+      [pagination]="vm.pagination"
+      [loading]="loading()"
+      >
+
+      </app-sports-events-overview-items>
+      <mat-paginator
+      [length]="sportsEvents.meta.total"
+      [pageIndex] ="vm.pagination.value.page -1"
+      [pageSize]="vm.pagination.value.size"
+      ></mat-paginator>
+    </ng-container>
+  </app-overview>
+}

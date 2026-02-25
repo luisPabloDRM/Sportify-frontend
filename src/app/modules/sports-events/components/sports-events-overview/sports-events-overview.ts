@@ -1,7 +1,8 @@
+import { OverviewDirective } from './../../../../shared/directives/overview/overview.directive';
 import { CommonModule, Location } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { MaterialModule } from '../../../../shared/material/material.module';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import {
   BehaviorSubject,
@@ -21,10 +22,18 @@ import { SportEventFilterDTO } from '../../models/sports-events.models';
 import { SPORT_EVENT_FILTER_TYPES } from '../../constants/sports_events.constants';
 import { SportsEventsDomainService } from '../../services/sports-events-domain.service';
 import { EMPTY_PAGINATED_RESPONSE } from '../../../../shared/utils/pagination/pagination.constants';
+import { SportsEventsOverviewItems } from './sports-events-overview-items/sports-events-overview-items';
+import { ProgressBarDirective } from '../../../../shared/directives/progress-bar/progress-bar.directive';
 
 @Component({
   selector: 'app-sports-events-overview',
-  imports: [CommonModule, MaterialModule],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    OverviewDirective,
+    SportsEventsOverviewItems,
+    ProgressBarDirective,
+  ],
   templateUrl: './sports-events-overview.html',
   styleUrl: './sports-events-overview.scss',
 })
@@ -34,6 +43,7 @@ export class SportsEventsOverview {
   protected readonly location = inject(Location);
   protected readonly paginationService = inject(PaginationService);
   protected readonly sportEventDomainService = inject(SportsEventsDomainService);
+  protected readonly router = inject(Router);
 
   protected readonly sports$ = this.activatedRoute.data.pipe(
     takeUntilDestroyed(),
@@ -87,9 +97,14 @@ export class SportsEventsOverview {
     .subscribe();
 
   protected readonly vm = Object.freeze({
-    isSendingRequest: toSignal(this.isSendingRequest$, {requireSync: true}),
+    isSendingRequest: toSignal(this.isSendingRequest$, { requireSync: true }),
     pagination: this.pagination,
-    sportEvents : toSignal(this.sportsEvents$, {requireSync: true}),
-    sports: toSignal(this.sports$, {requireSync: true})
-  })
+    sportEvents: toSignal(this.sportsEvents$, { requireSync: true }),
+    sports: toSignal(this.sports$, { requireSync: true }),
+  });
+
+  protected create() {
+    const path = ['sports-events', 'create', 'sport', this.vm.sports().id];
+    this.router.navigate(path);
+  }
 }

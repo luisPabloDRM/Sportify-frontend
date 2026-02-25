@@ -1,0 +1,31 @@
+export const FORM_ERROR_MESSAGE_MAP = new Map<string, string>([
+  ['required', 'Este campo es obligatorio'],
+  ['passwordLength', 'La contraseña debe tener al menos {{requiredLength}} caracteres'],
+  ['passwordWithoutNumber', 'La contraseña debe tener al menos {{requiredNumbers}} dígito/s'],
+  ['passwordWithoutLetter', 'La contraseña debe tener al menos {{requiredLetters}} letra/s'],
+  [
+    'passwordWithoutSpecialCharacter',
+    'La contraseña debe tener al menos {{requiredSpecialCharacters}} carácter especial',
+  ],
+  [
+    'passwordWithoutUpperCaseLetter',
+    'La contraseña debe contener al menos {{requiredUpperCaseLetters}} letras mayúsculas',
+  ],
+  [
+    'passwordWithoutLowerCaseLetter',
+    'La constraseña debe contener al menos {{requiredLowerCaseLetters}} letras minúsculas',
+  ],
+  ['email', 'El formato de este campo debe ser de tipo e-mail'],
+  ['phone', 'Este campo debe estar formado solamente por 9 dígitos'],
+  ['postalCode', 'Este campo debe estar formado solamente por 5 dígitos'],
+  ['dni', 'Este campo debe tener el formato correcto de un DNI'],
+  ['nif', 'Este campo debe tener el formato correcto de un NIF'],
+  ['matDatepickerParse', 'Este campo debe tener un formato de fecha correcto'],
+  ['min', 'El valor de este campo debe ser igual o superior al mínimo'],
+  ['max', 'El valor de este campo debe ser igual o inferior al máximo'],
+  ['minlength', 'El campo requiere un mínimo de {{requiredLength}} elemento/s'],
+  ['maxlength', 'El campo no puede exceder {{requiredLength}} elemento/s'],
+  ['hour', 'El campo no tiene un formato de hora válido'],
+  ['confirmation', 'Este campo debe tener el mismo valor que el anterior'],
+  ['notAutocompleted', 'Debes seleccionar una opción del buscador'],
+]);

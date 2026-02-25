@@ -12,3 +12,9 @@ export const SPORT_EVENT_FILTER_TYPES: {
   sportName: 'string',
   confirmed: 'boolean',
 };
+
+export enum SportOrderAction {
+  CHECK_IN = 'Apuntarse',
+  REMIND = 'Recuérdamelo más tarde',
+  DELETE = 'Borrar'
+}

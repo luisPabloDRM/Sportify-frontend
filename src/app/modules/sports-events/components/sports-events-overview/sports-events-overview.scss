@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+}
+header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+.actions {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+}

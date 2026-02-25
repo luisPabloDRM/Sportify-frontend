@@ -20,7 +20,7 @@ export class SportsEventsApiService {
   protected readonly paginationService = inject(PaginationService);
   protected readonly apiService = inject(Api);
 
-  private getRootRoute = () => `${this.apiService.getRoot()}/sports-events`;
+  private getRootRoute = () => `${this.apiService.getRoot()}/sport-events`;
   private getOneRoute = (id: number) => `${this.getRootRoute()}/${id}`
 
   getPaginated = (pagination: PaginationValues) => {
