@@ -82,6 +82,7 @@ export class SportsEventsOverview {
         filters: { ...pagination.filters, sportId: sport.id },
       }),
     ),
+    tap((value) => console.log("Sport Event, ", value)),
     startWith(EMPTY_PAGINATED_RESPONSE),
     tap(() => this.isSendingRequest$.next(false)),
     shareReplay(1),

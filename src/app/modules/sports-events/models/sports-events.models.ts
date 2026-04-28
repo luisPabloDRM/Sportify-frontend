@@ -6,7 +6,7 @@ export type SportEventEntityPlainDTO = {
   id: number;
   name: string;
   location: string;
-  eventDate: string;
+  eventDate: DateTime;
   maxPlayers: number;
   minPlayers: number;
   isUserCreator: boolean;
@@ -17,7 +17,10 @@ export type SportEventEntityPlainDTO = {
   createdAt: string;
   updatedAt: string;
 };
-export type SportEventEntityParsedDTO = Omit<SportEventEntityPlainDTO, 'createdAt' | 'updatedAt'> & {
+export type SportEventEntityParsedDTO = Omit<
+  SportEventEntityPlainDTO,
+  'createdAt' | 'updatedAt'
+> & {
   createdAt: DateTime;
   updatedAt: DateTime;
 };
@@ -48,9 +51,9 @@ export type SportEventUpdateProcessedDTO = Pick<
 export type SportEventPaginatedPlainDTO = Pick<
   SportEventEntityPlainDTO,
   'id' | 'location' | 'name' | 'eventDate' | 'sportId' | 'minPlayers' | 'maxPlayers' | 'createdAt'
-> & { sportName: string };
+> & { sportName: string; users: Array<Pick<UserEntityParsedDTO, 'id' | 'fullname'>> };
 
-export type SportEventPaginatedParsedDTO = SportEventPaginatedPlainDTO
+export type SportEventPaginatedParsedDTO = SportEventPaginatedPlainDTO;
 
 export type SportEventFilterDTO = Partial<{
   id: number;

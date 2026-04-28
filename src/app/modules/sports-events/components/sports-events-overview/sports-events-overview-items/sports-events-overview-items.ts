@@ -31,18 +31,17 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SportsEventsOverviewItems {
-protected readonly matDialog = inject(MatDialog)
-protected readonly router = inject(Router)
+  protected readonly matDialog = inject(MatDialog);
+  protected readonly router = inject(Router);
   readonly isSendingRequest = input.required<boolean>();
   readonly pagination = input.required<Pagination<SportEventFilterDTO>>();
   readonly sportsEvents = input.required<SportEventPaginatedParsedDTO[]>();
   // readonly action = output<SportOrderAction>();
   readonly loading = input.required<boolean>();
 
-  protected readonly ResponsiveDisplayMode= ResponsiveDisplayMode;
+  protected readonly ResponsiveDisplayMode = ResponsiveDisplayMode;
 
-  protected readonly columns = ['name', 'location', 'eventDate', 'players'];
+  protected readonly columns = ['name', 'location', 'eventDate', 'players', 'status', 'actions'];
 
-
-
+  //TODO: Hacer observables para calcular el estado de la actividad si libre u ocupado
 }

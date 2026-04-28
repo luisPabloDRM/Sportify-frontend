@@ -1,0 +1,172 @@
+table {
+  margin: 3rem 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.table-wrapper {
+  padding: 1.5rem; /* espacio alrededor */
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.events-table {
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
+  overflow-x: auto;
+
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.05),
+    0 4px 12px rgba(0,0,0,0.04);
+}
+
+/* Angular Material table fix */
+.mat-mdc-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* HEADER */
+
+.events-table .mat-mdc-header-row {
+  background: #f5f7fa;
+}
+
+.events-table .mat-mdc-header-cell {
+  font-weight: 600;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* ROWS */
+
+.event-row {
+  transition: background 0.2s ease;
+}
+
+.event-row:hover {
+  background: #f9fafb;
+}
+
+/* NAME */
+
+.event-name {
+  font-weight: 500;
+  color: #111827;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* LOCATION */
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #4b5563;
+  min-width: 0;
+}
+
+.location mat-icon {
+  font-size: 18px;
+  color: #6b7280;
+}
+
+/* DATE */
+
+.date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #4b5563;
+  min-width: 0;
+}
+
+.date mat-icon {
+  font-size: 18px;
+  color: #6b7280;
+}
+
+/* PLAYERS CHIP */
+
+.players-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  background: #eef2ff;
+  color: #4338ca;
+
+  padding: 4px 10px;
+  border-radius: 20px;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.players-chip mat-icon {
+  font-size: 16px;
+}
+
+.mat-mdc-row {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.event-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.event-avatar {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #eef2ff;
+  color: #4f46e5;
+  flex-shrink: 0;
+}
+
+.event-avatar mat-icon {
+  font-size: 20px;
+}
+
+.event-sub {
+  font-size: 12px;
+  color: #6b7280;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.status-open {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.status-full {
+  background: #fef2f2;
+  color: #dc2626;
+}
