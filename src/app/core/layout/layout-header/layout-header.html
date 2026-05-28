@@ -1,17 +1,62 @@
 <header class="header">
-    <div class="container">
-        <div class="logo">
-            <span>SPORTLY</span>
-        </div>
+  <div class="container">
 
-        <button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle menu">
-            ☰
+    <!-- Logo -->
+    <a class="logo" routerLink="/dashboard" aria-label="Ir al inicio">
+      <mat-icon class="logo__icon">sports</mat-icon>
+      <span class="logo__text">Sportly</span>
+    </a>
+
+    <!-- Nav principal -->
+    <nav class="nav" [class.open]="isMenuOpen" (click)="closeMenu()">
+      <a class="nav__link"
+         routerLink="/dashboard"
+         routerLinkActive="nav__link--active"
+         [routerLinkActiveOptions]="{ exact: true }">
+        Inicio
+      </a>
+      <a class="nav__link"
+         routerLink="/dashboard/sports-events"
+         routerLinkActive="nav__link--active">
+        Eventos
+      </a>
+      <a class="nav__link"
+         routerLink="/dashboard/users"
+         routerLinkActive="nav__link--active">
+        Usuarios
+      </a>
+    </nav>
+
+    <!-- Acciones derecha -->
+    <div class="header-right">
+
+      <!-- Avatar / menú usuario -->
+      @if (user) {
+        <button class="user-btn" [matMenuTriggerFor]="userMenu" aria-label="Menú de usuario">
+          <span class="user-btn__avatar">{{ initials }}</span>
+          <span class="user-btn__name">{{ user.fullname }}</span>
+          <mat-icon class="user-btn__chevron">expand_more</mat-icon>
         </button>
 
-        <nav class="nav" [class.open]="isMenuOpen">
-            <a routerLink="/dashboard">Dashboard</a>
-            <a routerLink="/dashboard/users">Users</a>
-            <a routerLink="/authentication/log-in">Login</a>
-        </nav>
+        <mat-menu #userMenu="matMenu" xPosition="before">
+          <div class="user-menu-info" mat-menu-item disabled>
+            <div class="user-menu-info__name">{{ user.fullname }}</div>
+            <div class="user-menu-info__email">{{ user.email }}</div>
+          </div>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="logOut()" class="logout-item">
+            <mat-icon>logout</mat-icon>
+            <span>Cerrar sesión</span>
+          </button>
+        </mat-menu>
+      }
+
+      <!-- Hamburguesa (móvil) -->
+      <button class="menu-toggle" (click)="$event.stopPropagation(); toggleMenu()" aria-label="Abrir menú">
+        <mat-icon>{{ isMenuOpen ? 'close' : 'menu' }}</mat-icon>
+      </button>
+
     </div>
+
+  </div>
 </header>

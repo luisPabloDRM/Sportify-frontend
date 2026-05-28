@@ -32,7 +32,6 @@ import { ProgressBarDirective } from '../../../../shared/directives/progress-bar
     MaterialModule,
     OverviewDirective,
     SportsEventsOverviewItems,
-    ProgressBarDirective,
   ],
   templateUrl: './sports-events-overview.html',
   styleUrl: './sports-events-overview.scss',
@@ -105,7 +104,11 @@ export class SportsEventsOverview {
   });
 
   protected create() {
-    const path = ['sports-events', 'create', 'sport', this.vm.sports().id];
+    const path = ['/dashboard', 'sports-events', 'create', 'sport', this.vm.sports().id];
     this.router.navigate(path);
+  }
+
+  protected refresh() {
+    this.refreshPagination.next();
   }
 }

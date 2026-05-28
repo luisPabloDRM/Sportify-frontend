@@ -1,25 +1,43 @@
 <section class="sports-section">
 
-    <h2 class="section-title">Sports available</h2>
-
-    <div class="sports-grid">
-        @for (sport of vm.sports(); track $index) {
-        <mat-card class="sport-card" (click)="goToSport(sport)">
-
-
-
-            <div class="image-container">
-                <img mat-card-image [src]="sport.icon" />
-             </div>
-
-                <mat-card-content>
-                    <h3 class="sport-title">
-                        {{sport.name}}
-                    </h3>
-                </mat-card-content>
-
-        </mat-card>
-        }
+  <div class="section-header">
+    <div class="section-badge">
+      <mat-icon>sports</mat-icon>
+      <span>Deportes disponibles</span>
     </div>
+    <h2 class="section-title">¿Qué quieres practicar?</h2>
+  </div>
+
+  <div class="sports-grid">
+    @for (sport of vm.sports(); track sport.id) {
+      <div
+        class="sport-card"
+        (click)="goToSport(sport)"
+        [attr.aria-label]="'Ver eventos de ' + sport.name"
+        role="button"
+        tabindex="0"
+        (keydown.enter)="goToSport(sport)"
+      >
+        <div class="sport-card__glow"></div>
+        <div class="sport-card__icon-wrapper">
+          <span class="sport-card__initial">{{ sport.name.charAt(0).toUpperCase() }}</span>
+        </div>
+        <div class="sport-card__content">
+          <h3 class="sport-card__name">{{ sport.name }}</h3>
+          <span class="sport-card__cta">
+            Ver eventos
+            <mat-icon class="sport-card__arrow">arrow_forward</mat-icon>
+          </span>
+        </div>
+      </div>
+    }
+
+    @empty {
+      <div class="sports-empty">
+        <mat-icon>sports_tennis</mat-icon>
+        <span>No hay deportes disponibles</span>
+      </div>
+    }
+  </div>
 
 </section>

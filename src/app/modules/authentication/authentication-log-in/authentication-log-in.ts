@@ -18,6 +18,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class AuthenticationLogIn implements OnDestroy {
   protected readonly form = LOG_IN_FORM;
   protected readonly loading = signal(false);
+  protected showPassword = false;
 
   constructor(
     private readonly authenticationDomain: AuthenticationDomain,

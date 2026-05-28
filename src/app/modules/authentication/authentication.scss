@@ -11,32 +11,54 @@
   flex-flow: row nowrap;
   justify-content: center;
   min-height: 100vh;
-  padding: 1 rem;
-  @media all and (min-width: 768px) {
-    padding: 1.5rem;
+  padding: 1.5rem 1rem;
+  position: relative;
+
+  /* Overlay oscuro para que la imagen quede bien en cualquier pantalla */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.58);
+    z-index: 0;
   }
-  @media all and (min-width: 1268px) {
-    padding: 2rem;
-  }
-}
-section {
-  background-color: white;
-  border: 1px solid rgb(0 0 0 / 25%);
-  border-radius: 4px;
-  box-shadow: 0px 0px 8px -2px rgb(0 0 0 / 50%);
-  display: flex;
-  flex-flow: column nowrap;
-  max-width: 100%;
-  overflow: hidden;
-  padding: 2rem;
-  width: calc(450px + 4rem);
-}
-img {
-  align-self: center;
-  height: calc(4rem + 7.5vh);
-  max-height: 8rem;
-  object-fit: contain;
-  object-position: center;
-  margin-bottom: 2rem;
 }
 
+section {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-flow: column nowrap;
+  overflow: hidden;
+  padding: 2.5rem 2.25rem;
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  z-index: 1;
+}
+
+img {
+  align-self: center;
+  height: auto;
+  max-height: 5.5rem;
+  max-width: 55%;
+  width: auto;
+  object-fit: contain;
+  object-position: center;
+  margin-bottom: 1.75rem;
+}
+
+/* Pantallas muy pequeñas */
+@media (max-width: 480px) {
+  section {
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
+  }
+
+  img {
+    max-width: 50%;
+    max-height: 4.5rem;
+    margin-bottom: 1.25rem;
+  }
+}

@@ -6,12 +6,14 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { MaterialModule } from './shared/material/material.module';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     importProvidersFrom(MaterialModule),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
+    provideNativeDateAdapter(),
     provideHttpClient(withInterceptors([authInterceptor])),
     provideRouter(routes, withRouterConfig({ paramsInheritanceStrategy: 'always' })),
     provideClientHydration(withEventReplay()),

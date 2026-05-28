@@ -1,5 +1,5 @@
 <header>
-  <h2>Listado de eventos disponibles para <strong>{{vm.sports().name}}</strong></h2>
+  <h2><strong>{{vm.sports().name}}</strong></h2>
   <div class="actions">
     <a mat-raised-button (click)="create()">
       <mat-icon>add</mat-icon>
@@ -15,6 +15,7 @@
       [isSendingRequest]="vm.isSendingRequest()"
       [pagination]="vm.pagination"
       [loading]="loading()"
+      (joined)="refresh()"
       >
 
       </app-sports-events-overview-items>

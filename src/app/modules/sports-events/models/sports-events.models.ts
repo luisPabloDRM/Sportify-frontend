@@ -51,7 +51,10 @@ export type SportEventUpdateProcessedDTO = Pick<
 export type SportEventPaginatedPlainDTO = Pick<
   SportEventEntityPlainDTO,
   'id' | 'location' | 'name' | 'eventDate' | 'sportId' | 'minPlayers' | 'maxPlayers' | 'createdAt'
-> & { sportName: string; users: Array<Pick<UserEntityParsedDTO, 'id' | 'fullname'>> };
+> & {
+  sportName: string;
+  users: Array<Pick<UserEntityParsedDTO, 'id' | 'fullname'> & { isUserCreator?: boolean }>;
+};
 
 export type SportEventPaginatedParsedDTO = SportEventPaginatedPlainDTO;
 

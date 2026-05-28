@@ -1,0 +1,107 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon>sports</mat-icon>
+  Unirse al evento
+</h2>
+
+<mat-dialog-content class="dialog-content">
+
+  <div class="event-header">
+    <p class="event-name">{{ data.event.name }}</p>
+    <span class="status-badge" [ngClass]="statusClass">
+      {{ statusLabel }}
+    </span>
+  </div>
+
+  <div class="info-grid">
+
+    <div class="info-item">
+      <mat-icon class="info-icon">location_on</mat-icon>
+      <div class="info-text">
+        <span class="info-label">Ubicación</span>
+        <span class="info-value">{{ data.event.location }}</span>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <mat-icon class="info-icon">date_range</mat-icon>
+      <div class="info-text">
+        <span class="info-label">Fecha</span>
+        <span class="info-value">{{ $any(data.event.eventDate) | date: 'dd MMM yyyy' }}</span>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <mat-icon class="info-icon">fitness_center</mat-icon>
+      <div class="info-text">
+        <span class="info-label">Deporte</span>
+        <span class="info-value">{{ data.event.sportName }}</span>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <mat-icon class="info-icon">groups</mat-icon>
+      <div class="info-text">
+        <span class="info-label">Plazas</span>
+        <span class="info-value">{{ enrolled }} / {{ data.event.maxPlayers }} ocupadas</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="capacity-section">
+    <div class="capacity-labels">
+      <span>Apuntados</span>
+      <span>{{ enrolled }} / {{ data.event.maxPlayers }}</span>
+    </div>
+    <div class="capacity-bar-track">
+      <div
+        class="capacity-bar-fill"
+        [style.width.%]="(enrolled / data.event.maxPlayers) * 100"
+        [class.bar-full]="isFull"
+      ></div>
+    </div>
+    <p class="capacity-hint">
+      Se necesitan al menos {{ data.event.minPlayers }} jugadores para confirmar el evento.
+    </p>
+  </div>
+
+  @if (data.event.users?.length) {
+    <div class="participants-section">
+      <p class="participants-title">Participantes apuntados</p>
+      <div class="participants-list">
+        @for (user of data.event.users; track user.id) {
+          <span class="participant-chip">
+            <mat-icon>person</mat-icon>
+            {{ user.fullname }}
+          </span>
+        }
+      </div>
+    </div>
+  }
+
+  @if (isFull) {
+    <div class="full-warning">
+      <mat-icon>warning</mat-icon>
+      Este evento ya está completo y no admite más participantes.
+    </div>
+  }
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-stroked-button (click)="cancel()" [disabled]="isLoading()">Cancelar</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="join()"
+    [disabled]="isLoading() || isFull"
+  >
+    @if (isLoading()) {
+      <mat-spinner diameter="18"></mat-spinner>
+      Apuntando...
+    } @else {
+      <mat-icon>person_add</mat-icon>
+      Apuntarse
+    }
+  </button>
+</mat-dialog-actions>

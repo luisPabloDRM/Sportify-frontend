@@ -1,26 +1,64 @@
-@use 'theme.scss';
-
 :host {
   display: flex;
   flex-flow: column nowrap;
-  gap: 1rem;
+  gap: 1.25rem;
 }
-h1 {
-  color: theme.get-accent();
-  font-size: 1.25rem;
-  font-weight: 400;
+
+/* ── CABECERA ── */
+.login-header {
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.login-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.3rem;
+  letter-spacing: -0.01em;
+}
+
+.login-subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
   margin: 0;
 }
-form{
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 1rem;
+
+/* ── FORMULARIO ── */
+form {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.25rem;
 }
-button {
-    margin-top: 1rem;
+
+/* ── BOTÓN ── */
+.submit-btn {
+  margin-top: 0.5rem;
+  height: 46px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
 }
+
+/* ── PIE ── */
+footer {
+  text-align: center;
+  margin-top: -0.25rem;
+}
+
 .recovery-link {
-    display: block;
-    font-size: 0.9rem;
-    margin-top: 1rem;
+  display: inline-block;
+  font-size: 0.85rem;
+  color: #6b7280;
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: #111827;
+    text-decoration: underline;
+  }
 }

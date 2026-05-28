@@ -1,33 +1,24 @@
 <div class="table-wrapper">
+
+  <!-- ── DESKTOP ── -->
   <table
     class="events-table"
     *appResponsiveDisplay="ResponsiveDisplayMode.Desktop"
     mat-table
     matSort
     appPaginationTableSort
-    [dataSource]="sportsEvents()"
+    [dataSource]="enrichedEvents()"
     [pagination]="pagination()"
   >
-  
-    <!-- Nombre -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Evento
-      </th>
-  
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Evento</th>
       <td mat-cell *matCellDef="let event">
-        <div class="event-name">
-          {{ event.name }}
-        </div>
+        <div class="event-name">{{ event.name }}</div>
       </td>
     </ng-container>
-  
-    <!-- Localización -->
+
     <ng-container matColumnDef="location">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Ubicación
-      </th>
-  
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ubicación</th>
       <td mat-cell *matCellDef="let event">
         <div class="location">
           <mat-icon>location_on</mat-icon>
@@ -35,99 +26,120 @@
         </div>
       </td>
     </ng-container>
-  
-    <!-- Fecha -->
+
     <ng-container matColumnDef="eventDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Fecha
-      </th>
-  
-     <td mat-cell *matCellDef="let event">
-    <div class="event-cell">
-  
-      <div class="event-avatar">
-        <mat-icon>date_range</mat-icon>
-      </div>
-  
-      <div class="event-info">
-        <div class="event-name">
-          {{ event.eventDate | date }}
-        </div>
-      </div>
-  
-    </div>
-  </td>
-    </ng-container>
-  
-    <!-- Jugadores -->
-    <ng-container matColumnDef="players">
-      <th mat-header-cell *matHeaderCellDef>
-        Jugadores
-      </th>
-  
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
       <td mat-cell *matCellDef="let event">
-        <div class="players-chip">
-          <mat-icon>groups</mat-icon>
-          {{ event.minPlayers }} - {{ event.maxPlayers }}
+        <div class="event-cell">
+          <div class="event-avatar"><mat-icon>date_range</mat-icon></div>
+          <div class="event-name">{{ event.eventDate | date: 'dd MMM yyyy' }}</div>
         </div>
       </td>
     </ng-container>
-  
-    <ng-container matColumnDef="status">
-  
-    <th mat-header-cell *matHeaderCellDef>
-      Estado
-    </th>
-  
-    <td mat-cell *matCellDef="let event">
-   <div class="players-chip">
+
+    <ng-container matColumnDef="players">
+      <th mat-header-cell *matHeaderCellDef>Capacidad</th>
+      <td mat-cell *matCellDef="let event">
+        <div class="players-chip">
           <mat-icon>groups</mat-icon>
-          {{ event.status }}
+          {{ event.minPlayers }} – {{ event.maxPlayers }}
         </div>
-  
-  
-    </td>
-  
-  </ng-container>
-  <ng-container matColumnDef="actions">
-  
-    <th mat-header-cell *matHeaderCellDef></th>
-  
-    <td mat-cell *matCellDef="let event">
-  
-      <button
-        mat-icon-button
-        [matMenuTriggerFor]="menu"
-      >
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-  
-        <button mat-menu-item>
-          <mat-icon>visibility</mat-icon>
-          Ver evento
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="enrolled">
+      <th mat-header-cell *matHeaderCellDef>Apuntados</th>
+      <td mat-cell *matCellDef="let event">
+        <div class="enrolled-cell">
+          <div class="enrolled-bar-track">
+            <div
+              class="enrolled-bar-fill"
+              [style.width.%]="(event.enrolled / event.maxPlayers) * 100"
+              [class.bar-full]="event.enrolled >= event.maxPlayers"
+            ></div>
+          </div>
+          <span class="enrolled-count">{{ event.enrolled }} / {{ event.maxPlayers }}</span>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td mat-cell *matCellDef="let event">
+        <span class="status-badge" [ngClass]="event.statusClass">{{ event.statusLabel }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let event">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
         </button>
-  
-        <button mat-menu-item>
-          <mat-icon>edit</mat-icon>
-          Editar
-        </button>
-  
-        <button mat-menu-item>
-          <mat-icon>delete</mat-icon>
-          Eliminar
-        </button>
-  
-      </mat-menu>
-  
-    </td>
-  
-  </ng-container>
-  
-    <!-- Header & Rows -->
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openJoinDialog(event)"><mat-icon>person_add</mat-icon>Apuntarse</button>
+          @if (event.isCurrentUserCreator) {
+            <button mat-menu-item><mat-icon>edit</mat-icon>Editar</button>
+            <button mat-menu-item class="danger-item"><mat-icon>delete</mat-icon>Eliminar</button>
+          }
+        </mat-menu>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="columns"></tr>
     <tr mat-row *matRowDef="let row; columns: columns" class="event-row"></tr>
-  
   </table>
+
+  <!-- ── MÓVIL ── -->
+  <div class="events-cards" *appResponsiveDisplay="ResponsiveDisplayMode.Compact">
+    @for (event of enrichedEvents(); track event.id) {
+      <div class="event-card">
+
+        <div class="event-card__top">
+          <div class="event-card__title">{{ event.name }}</div>
+          <span class="status-badge" [ngClass]="event.statusClass">{{ event.statusLabel }}</span>
+        </div>
+
+        <div class="event-card__meta">
+          <div class="event-card__meta-item">
+            <mat-icon>location_on</mat-icon>
+            <span>{{ event.location }}</span>
+          </div>
+          <div class="event-card__meta-item">
+            <mat-icon>date_range</mat-icon>
+            <span>{{ $any(event.eventDate) | date: 'dd MMM yyyy' }}</span>
+          </div>
+          <div class="event-card__meta-item">
+            <mat-icon>groups</mat-icon>
+            <span>{{ event.minPlayers }} – {{ event.maxPlayers }} jugadores</span>
+          </div>
+        </div>
+
+        <div class="event-card__footer">
+          <div class="enrolled-cell">
+            <div class="enrolled-bar-track">
+              <div
+                class="enrolled-bar-fill"
+                [style.width.%]="(event.enrolled / event.maxPlayers) * 100"
+                [class.bar-full]="event.enrolled >= event.maxPlayers"
+              ></div>
+            </div>
+            <span class="enrolled-count">{{ event.enrolled }} / {{ event.maxPlayers }} apuntados</span>
+          </div>
+          <button mat-icon-button [matMenuTriggerFor]="mobileMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #mobileMenu="matMenu">
+            <button mat-menu-item (click)="openJoinDialog(event)"><mat-icon>person_add</mat-icon>Apuntarse</button>
+            @if (event.isCurrentUserCreator) {
+              <button mat-menu-item><mat-icon>edit</mat-icon>Editar</button>
+              <button mat-menu-item class="danger-item"><mat-icon>delete</mat-icon>Eliminar</button>
+            }
+          </mat-menu>
+        </div>
+
+      </div>
+    }
+  </div>
 
 </div>
