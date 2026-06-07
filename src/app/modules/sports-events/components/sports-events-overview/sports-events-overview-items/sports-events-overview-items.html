@@ -77,8 +77,24 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="openJoinDialog(event)"><mat-icon>person_add</mat-icon>Apuntarse</button>
+          @if (!event.isCurrentUserSubscribed) {
+            <button mat-menu-item (click)="openJoinDialog(event)">
+              <mat-icon>person_add</mat-icon>Apuntarse
+            </button>
+          }
+          @if (event.isCurrentUserSubscribed) {
+            <button
+              mat-menu-item
+              class="warning-item"
+              [disabled]="unsubscribingId() === event.id"
+              (click)="unsubscribe(event)"
+            >
+              <mat-icon>person_remove</mat-icon>
+              {{ unsubscribingId() === event.id ? 'Desapuntando...' : 'Desapuntarse' }}
+            </button>
+          }
           @if (event.isCurrentUserCreator) {
+            <mat-divider></mat-divider>
             <button mat-menu-item><mat-icon>edit</mat-icon>Editar</button>
             <button mat-menu-item class="danger-item"><mat-icon>delete</mat-icon>Eliminar</button>
           }
@@ -130,8 +146,24 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #mobileMenu="matMenu">
-            <button mat-menu-item (click)="openJoinDialog(event)"><mat-icon>person_add</mat-icon>Apuntarse</button>
+            @if (!event.isCurrentUserSubscribed) {
+              <button mat-menu-item (click)="openJoinDialog(event)">
+                <mat-icon>person_add</mat-icon>Apuntarse
+              </button>
+            }
+            @if (event.isCurrentUserSubscribed) {
+              <button
+                mat-menu-item
+                class="warning-item"
+                [disabled]="unsubscribingId() === event.id"
+                (click)="unsubscribe(event)"
+              >
+                <mat-icon>person_remove</mat-icon>
+                {{ unsubscribingId() === event.id ? 'Desapuntando...' : 'Desapuntarse' }}
+              </button>
+            }
             @if (event.isCurrentUserCreator) {
+              <mat-divider></mat-divider>
               <button mat-menu-item><mat-icon>edit</mat-icon>Editar</button>
               <button mat-menu-item class="danger-item"><mat-icon>delete</mat-icon>Eliminar</button>
             }

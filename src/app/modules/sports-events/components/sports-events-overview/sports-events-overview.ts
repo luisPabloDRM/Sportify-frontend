@@ -1,13 +1,15 @@
-import { OverviewDirective } from './../../../../shared/directives/overview/overview.directive';
 import { CommonModule, Location } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { MaterialModule } from '../../../../shared/material/material.module';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import {
   BehaviorSubject,
+  catchError,
   combineLatest,
   map,
+  of,
   shareReplay,
   startWith,
   Subject,
@@ -23,14 +25,13 @@ import { SPORT_EVENT_FILTER_TYPES } from '../../constants/sports_events.constant
 import { SportsEventsDomainService } from '../../services/sports-events-domain.service';
 import { EMPTY_PAGINATED_RESPONSE } from '../../../../shared/utils/pagination/pagination.constants';
 import { SportsEventsOverviewItems } from './sports-events-overview-items/sports-events-overview-items';
-import { ProgressBarDirective } from '../../../../shared/directives/progress-bar/progress-bar.directive';
 
 @Component({
   selector: 'app-sports-events-overview',
   imports: [
     CommonModule,
     MaterialModule,
-    OverviewDirective,
+    MatPaginatorModule,
     SportsEventsOverviewItems,
   ],
   templateUrl: './sports-events-overview.html',
@@ -57,7 +58,7 @@ export class SportsEventsOverview {
 
   protected readonly pagination = this.paginationService.fromQueryParams<SportEventFilterDTO>(
     SPORT_EVENT_FILTER_TYPES,
-    { sortField: 'id', sortOrder: 'asc' },
+    { sortField: 'id', sortOrder: 'asc', size: 50 },
   );
 
   private readonly refreshPagination = new Subject<void>();
@@ -79,7 +80,9 @@ export class SportsEventsOverview {
       this.sportEventDomainService.getPaginated({
         ...pagination,
         filters: { ...pagination.filters, sportId: sport.id },
-      }),
+      }).pipe(
+        catchError(() => of(EMPTY_PAGINATED_RESPONSE)),
+      ),
     ),
     tap((value) => console.log("Sport Event, ", value)),
     startWith(EMPTY_PAGINATED_RESPONSE),
@@ -102,6 +105,10 @@ export class SportsEventsOverview {
     sportEvents: toSignal(this.sportsEvents$, { requireSync: true }),
     sports: toSignal(this.sports$, { requireSync: true }),
   });
+
+  protected onPageChange(event: PageEvent) {
+    this.pagination.paginate(event.pageIndex + 1, event.pageSize);
+  }
 
   protected create() {
     const path = ['/dashboard', 'sports-events', 'create', 'sport', this.vm.sports().id];

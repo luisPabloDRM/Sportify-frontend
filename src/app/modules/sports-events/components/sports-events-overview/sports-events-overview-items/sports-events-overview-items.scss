@@ -1,8 +1,11 @@
 /* ── WRAPPER ── */
 .table-wrapper {
-  padding: 1.5rem;
+  padding: 1rem 1.5rem 1.5rem;
   box-sizing: border-box;
   width: 100%;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 /* ── DESKTOP TABLE ── */
@@ -11,9 +14,13 @@
   overflow: hidden;
   width: 100%;
   box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);
+  --mat-table-background-color: #ffffff;
 }
 
 .mat-mdc-table { width: 100%; table-layout: fixed; }
+
+.events-table .mat-mdc-row,
+.events-table .mat-mdc-no-data-row { background: #ffffff; }
 
 .events-table .mat-mdc-header-row { background: #f5f7fa; }
 
@@ -122,6 +129,11 @@
 .danger-item {
   color: #dc2626 !important;
   mat-icon { color: #dc2626 !important; }
+}
+
+.warning-item {
+  color: #d97706 !important;
+  mat-icon { color: #d97706 !important; }
 }
 
 /* ── MOBILE CARDS ── */

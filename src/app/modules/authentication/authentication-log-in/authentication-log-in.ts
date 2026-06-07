@@ -6,7 +6,6 @@ import { Router, RouterLink } from '@angular/router';
 import { LOG_IN_FORM } from '../constants/authentication.constants';
 import { first, finalize } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-authentication-log-in',
@@ -38,11 +37,17 @@ export class AuthenticationLogIn implements OnDestroy {
 
     this.authenticationDomain
       .logIn(data)
-      .pipe(first())
+      .pipe(
+        first(),
+        finalize(() => this.loading.set(false)),
+      )
       .subscribe({
         next: () => {
           this.router.navigate(['/dashboard']);
-        }
+        },
+        error: () => {
+          // El error ya se gestiona en AuthenticationDomain (toast)
+        },
       });
   };
 }

@@ -1,5 +1,5 @@
 <header>
-  <h2><strong>{{vm.sports().name}}</strong></h2>
+  <h2><strong>{{ vm.sports().name }}</strong></h2>
   <div class="actions">
     <a mat-raised-button (click)="create()">
       <mat-icon>add</mat-icon>
@@ -7,23 +7,24 @@
     </a>
   </div>
 </header>
-@if (vm.sportEvents(); as sportsEvents) {
-  <app-overview [pagination]="vm.pagination">
-    <ng-container>
-      <app-sports-events-overview-items
-      [sportsEvents]="sportsEvents.data"
-      [isSendingRequest]="vm.isSendingRequest()"
-      [pagination]="vm.pagination"
-      [loading]="loading()"
-      (joined)="refresh()"
-      >
 
-      </app-sports-events-overview-items>
-      <mat-paginator
+@if (vm.sportEvents(); as sportsEvents) {
+  <app-sports-events-overview-items
+    [sportsEvents]="sportsEvents.data"
+    [isSendingRequest]="vm.isSendingRequest()"
+    [pagination]="vm.pagination"
+    [loading]="loading()"
+    (joined)="refresh()"
+  ></app-sports-events-overview-items>
+
+  @if (sportsEvents.meta.total > vm.pagination.value.size) {
+    <mat-paginator
+      class="dark-paginator"
       [length]="sportsEvents.meta.total"
-      [pageIndex] ="vm.pagination.value.page -1"
+      [pageIndex]="vm.pagination.value.page - 1"
       [pageSize]="vm.pagination.value.size"
-      ></mat-paginator>
-    </ng-container>
-  </app-overview>
+      [pageSizeOptions]="[10, 25, 50]"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
+  }
 }

@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MaterialModule } from '../../../../shared/material/material.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SportsEventsApiService } from '../../services/sports-events-api.service';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
 import { BehaviorSubject } from 'rxjs';
@@ -16,7 +18,7 @@ export type SportsEventsJoinDialogResult = { joined: boolean };
 
 @Component({
   selector: 'app-sports-events-join-dialog',
-  imports: [CommonModule, MaterialModule],
+  imports: [CommonModule, MaterialModule, MatIconModule, MatProgressSpinnerModule],
   templateUrl: './sports-events-join-dialog.html',
   styleUrl: './sports-events-join-dialog.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

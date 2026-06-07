@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MaterialModule } from '../../../../shared/material/material.module';
 import { SportsDomainService } from '../../../sports/services/sports-domain.service';
-import { map, startWith } from 'rxjs';
-import * as R from 'remeda';
+import { catchError, of, startWith } from 'rxjs';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { SportEntityParsedDTO } from '../../../sports/models/sports.models';
 import { Router } from '@angular/router';
@@ -21,7 +20,11 @@ export class SportsEventsDashboard {
 
   protected readonly sports$ = this.sportsDomain
     .getAll()
-    .pipe(takeUntilDestroyed(), startWith([] as SportEntityParsedDTO[]));
+    .pipe(
+      takeUntilDestroyed(),
+      catchError(() => of([] as SportEntityParsedDTO[])),
+      startWith([] as SportEntityParsedDTO[]),
+    );
 
   protected goToSport(sport: SportEntityParsedDTO) {
     this.router.navigate(['/dashboard', 'sports-events', 'overview', 'sport', sport.id]);

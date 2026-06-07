@@ -1,3 +1,9 @@
+:host {
+  display: block;
+  background: #0f172a;
+  min-height: calc(100vh - 60px);
+}
+
 .sports-section {
   padding: 3rem 2rem 4rem;
   max-width: 1200px;
@@ -12,8 +18,9 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #eff6ff;
-  color: #2563eb;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 0.8rem;
   font-weight: 600;
   padding: 4px 12px;
@@ -32,7 +39,7 @@
 .section-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #111827;
+  color: #f8fafc;
   line-height: 1.2;
   letter-spacing: -0.02em;
   margin: 0;
@@ -41,7 +48,7 @@
 .section-subtitle {
   margin-top: 0.625rem;
   font-size: 1rem;
-  color: #6b7280;
+  color: rgba(255, 255, 255, 0.55);
   max-width: 520px;
   line-height: 1.5;
 }
@@ -163,56 +170,101 @@
   line-height: 1;
 }
 
-/* ── RESPONSIVE ── */
+/* ── RESPONSIVE MÓVIL ── */
 @media (max-width: 768px) {
+
   .sports-section {
-    padding: 2rem 1.25rem 3rem;
+    padding: 1.75rem 1rem 3rem;
+    max-width: 100%;
+  }
+
+  .section-header {
+    margin-bottom: 1.5rem;
   }
 
   .section-title {
-    font-size: 1.6rem;
+    font-size: 1.65rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
   }
 
+  /* ── Grid ── */
   .sports-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
+    gap: 12px;
   }
 
+  /* ── Tarjeta base en móvil ── */
   .sport-card {
-    padding: 1.25rem 1rem 1.125rem;
+    border: none;
+    border-radius: 20px;
+    padding: 1.25rem 1.125rem 1.125rem;
+    min-height: 148px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+
+    /* Cancelar efectos hover de escritorio */
+    &:hover {
+      transform: none;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+      border-color: transparent;
+
+      .sport-card__glow  { opacity: 0; }
+      .sport-card__arrow { transform: none; }
+      .sport-card__cta   { color: rgba(255, 255, 255, 0.6); }
+    }
+
+    /* Feedback táctil */
+    &:active {
+      transform: scale(0.95);
+      transition: transform 0.1s ease;
+    }
   }
 
+  /* Icono como cristal esmerilado sobre el gradiente */
   .sport-card__icon-wrapper {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
     border-radius: 13px;
-    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.2) !important;
+    margin-bottom: 0.875rem;
   }
 
   .sport-card__initial {
     font-size: 1.4rem;
+    color: #ffffff;
   }
 
   .sport-card__name {
-    font-size: 0.95rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
   }
+
+  .sport-card__cta {
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.78rem;
+
+    mat-icon { color: rgba(255, 255, 255, 0.6); }
+  }
+
+  /* ── Paleta de gradientes (6 colores, se cicla por índice) ── */
+  .sport-card--c0 { background: linear-gradient(145deg, #667eea 0%, #764ba2 100%); }
+  .sport-card--c1 { background: linear-gradient(145deg, #f7797d 0%, #b81d73 100%); }
+  .sport-card--c2 { background: linear-gradient(145deg, #1cb5e0 0%, #0a3d91 100%); }
+  .sport-card--c3 { background: linear-gradient(145deg, #11998e 0%, #2ecc71 100%); }
+  .sport-card--c4 { background: linear-gradient(145deg, #f953c6 0%, #b91d73 100%); }
+  .sport-card--c5 { background: linear-gradient(145deg, #4776e6 0%, #8e54e9 100%); }
 }
 
 @media (max-width: 400px) {
-  .sports-section {
-    padding: 1.5rem 1rem 2rem;
-  }
-
-  .section-title {
-    font-size: 1.35rem;
-  }
-
   .sports-grid {
-    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
 
   .sport-card {
-    padding: 1rem 0.875rem 1rem;
+    padding: 1rem 0.875rem;
+    min-height: 130px;
   }
 }

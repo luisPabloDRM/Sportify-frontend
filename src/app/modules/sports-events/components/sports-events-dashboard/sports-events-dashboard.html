@@ -9,9 +9,9 @@
   </div>
 
   <div class="sports-grid">
-    @for (sport of vm.sports(); track sport.id) {
+    @for (sport of vm.sports(); track sport.id; let i = $index) {
       <div
-        class="sport-card"
+        class="sport-card sport-card--c{{ i % 6 }}"
         (click)="goToSport(sport)"
         [attr.aria-label]="'Ver eventos de ' + sport.name"
         role="button"

@@ -1,64 +1,143 @@
 @use 'theme.scss';
 
+/* ─────────────────────────────────────────
+   BASE COMPARTIDO
+   ───────────────────────────────────────── */
 :host {
-  align-items: center;
   background: linear-gradient(135deg, theme.get-dark(300), theme.get-dark(500));
   background-image: url('../../../assets/images/hero/hero.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
+  flex-flow: column nowrap;
   min-height: 100vh;
-  padding: 1.5rem 1rem;
   position: relative;
 
-  /* Overlay oscuro para que la imagen quede bien en cualquier pantalla */
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(2, 6, 23, 0.58);
+    background: rgba(2, 6, 23, 0.55);
     z-index: 0;
   }
 }
 
-section {
-  background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
-  display: flex;
-  flex-flow: column nowrap;
-  overflow: hidden;
-  padding: 2.5rem 2.25rem;
-  position: relative;
-  width: 100%;
-  max-width: 440px;
-  z-index: 1;
-}
-
-img {
-  align-self: center;
-  height: auto;
-  max-height: 5.5rem;
-  max-width: 55%;
-  width: auto;
-  object-fit: contain;
-  object-position: center;
-  margin-bottom: 1.75rem;
-}
-
-/* Pantallas muy pequeñas */
-@media (max-width: 480px) {
-  section {
-    padding: 2rem 1.5rem;
-    border-radius: 16px;
+/* ─────────────────────────────────────────
+   ESCRITORIO — tarjeta centrada
+   ───────────────────────────────────────── */
+@media (min-width: 769px) {
+  :host {
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem;
   }
 
-  img {
-    max-width: 50%;
-    max-height: 4.5rem;
-    margin-bottom: 1.25rem;
+  /* La zona hero solo es visible en móvil */
+  .auth-hero {
+    display: none;
+  }
+
+  section {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-flow: column nowrap;
+    overflow: hidden;
+    padding: 2.5rem 2.25rem;
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    z-index: 1;
+  }
+
+  .card-logo {
+    display: block;
+    align-self: center;
+    height: auto;
+    max-height: 5.5rem;
+    max-width: 55%;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 1.75rem;
+  }
+}
+
+/* ─────────────────────────────────────────
+   MÓVIL — bottom sheet
+   ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  :host {
+    justify-content: flex-end;
+
+    /* Overlay más ligero en móvil: deja respirar la imagen */
+    &::before {
+      background: rgba(2, 6, 23, 0.38);
+    }
+  }
+
+  /* ── Zona hero superior ── */
+  .auth-hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 38vh;
+    position: relative;
+    z-index: 1;
+    padding: 2rem 1.5rem 0;
+  }
+
+  .hero-logo {
+    width: auto;
+    max-width: 140px;
+    max-height: 72px;
+    object-fit: contain;
+    /* Invierte colores para que el logo quede blanco sobre la imagen */
+    filter: brightness(0) invert(1) drop-shadow(0 2px 10px rgba(0,0,0,0.4));
+  }
+
+  .hero-tagline {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.82);
+    letter-spacing: 0.03em;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    margin: 0;
+    text-align: center;
+  }
+
+  /* ── Bottom sheet ── */
+  section {
+    position: relative;
+    z-index: 2;
+    background: #ffffff;
+    border-radius: 28px 28px 0 0;
+    max-width: 100%;
+    width: 100%;
+    padding: 0 1.5rem 2.5rem;
+    box-shadow: 0 -6px 40px rgba(0, 0, 0, 0.28);
+    display: flex;
+    flex-direction: column;
+
+    /* Handle del bottom sheet */
+    &::before {
+      content: '';
+      display: block;
+      width: 38px;
+      height: 4px;
+      border-radius: 2px;
+      background: #d1d5db;
+      margin: 14px auto 20px;
+      flex-shrink: 0;
+    }
+  }
+
+  /* El logo de la tarjeta no se muestra en móvil */
+  .card-logo {
+    display: none;
   }
 }

@@ -5,6 +5,7 @@ import {
   inject,
   input,
   output,
+  signal,
 } from '@angular/core';
 import { MaterialModule } from '../../../../../shared/material/material.module';
 import { CommonModule } from '@angular/common';
@@ -17,6 +18,8 @@ import { ResponsiveDisplayMode } from '../../../../../shared/directives/responsi
 import { MatDialog } from '@angular/material/dialog';
 import { SportsEventsJoinDialog, SportsEventsJoinDialogData, SportsEventsJoinDialogResult } from '../../sports-events-join-dialog/sports-events-join-dialog';
 import { AuthUser } from '../../../../../core/services/auth-user/auth-user';
+import { SportsEventsApiService } from '../../../services/sports-events-api.service';
+import { ToastService } from '../../../../../shared/components/toast/toast.service';
 
 @Component({
   selector: 'app-sports-events-overview-items',
@@ -34,6 +37,8 @@ import { AuthUser } from '../../../../../core/services/auth-user/auth-user';
 export class SportsEventsOverviewItems {
   protected readonly matDialog = inject(MatDialog);
   private readonly authUser = inject(AuthUser);
+  private readonly apiService = inject(SportsEventsApiService);
+  private readonly toastService = inject(ToastService);
 
   readonly isSendingRequest = input.required<boolean>();
   readonly pagination = input.required<Pagination<SportEventFilterDTO>>();
@@ -42,10 +47,13 @@ export class SportsEventsOverviewItems {
 
   readonly joined = output<void>();
 
+  /** ID del evento que está procesando la baja en este momento (evita dobles clics) */
+  protected readonly unsubscribingId = signal<number | null>(null);
+
   protected readonly ResponsiveDisplayMode = ResponsiveDisplayMode;
   protected readonly columns = ['name', 'location', 'eventDate', 'players', 'enrolled', 'status', 'actions'];
 
-  /** Enriquece cada evento con conteo de apuntados, estado y si el usuario actual es creador */
+  /** Enriquece cada evento con estado, flags de usuario actual (creador / suscrito) */
   protected readonly enrichedEvents = computed(() => {
     const currentUserId = this.authUser.get()?.user.id;
 
@@ -74,7 +82,10 @@ export class SportsEventsOverviewItems {
       const isCurrentUserCreator = currentUserId != null &&
         (event.users ?? []).some((u) => u.id === currentUserId && u.isUserCreator === true);
 
-      return { ...event, enrolled, statusLabel, statusClass, isCurrentUserCreator };
+      const isCurrentUserSubscribed = currentUserId != null &&
+        (event.users ?? []).some((u) => u.id === currentUserId);
+
+      return { ...event, enrolled, statusLabel, statusClass, isCurrentUserCreator, isCurrentUserSubscribed };
     });
   });
 
@@ -91,5 +102,22 @@ export class SportsEventsOverviewItems {
           this.joined.emit();
         }
       });
+  }
+
+  protected unsubscribe(event: SportEventPaginatedParsedDTO): void {
+    if (this.unsubscribingId() !== null) return;
+    this.unsubscribingId.set(event.id);
+
+    this.apiService.unsuscribe(event.id).subscribe({
+      next: () => {
+        this.unsubscribingId.set(null);
+        this.toastService.success('Te has desapuntado del evento correctamente');
+        this.joined.emit();
+      },
+      error: (err) => {
+        this.unsubscribingId.set(null);
+        this.toastService.error(err?.error?.message ?? 'Error al desapuntarse del evento');
+      },
+    });
   }
 }

@@ -34,7 +34,7 @@ export class AuthenticationDomain {
     return this.authenticationApiService.logIn(data).pipe(
       tap((auth) => this.authUser.set(auth)),
       catchError((error: HttpErrorResponse) => {
-        const { message } = error.error;
+        const message = error.error?.message ?? 'Error al iniciar sesión. Inténtalo de nuevo.';
         this.toastService.error(message);
         throw error;
       }),

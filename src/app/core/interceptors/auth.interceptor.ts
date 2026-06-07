@@ -17,7 +17,8 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
         }})
         return next(req).pipe(
             catchError((error: HttpErrorResponse) => {
-                if (AUTH_CODES.includes(error.error.code)) {
+                const code = error.error?.code;
+                if (code && AUTH_CODES.includes(code)) {
                     toastService.error('La sesión ha caducado. Inicia sesión de nuevo');
                     authenticationDomainService.logOut();
                 }

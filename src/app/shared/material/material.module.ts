@@ -37,6 +37,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { MAT_BOTTOM_SHEET_CUSTOM_CONFIG, MAT_DATE_FORMATS_CUSTOM_CONFIG, MAT_DATE_LOCALE_CUSTOM_CONFIG, MAT_DIALOG_CUSTOM_CONFIG, MAT_FORM_FIELD_CUSTOM_CONFIG, MAT_PAGINATOR_CUSTOM_CONFIG, MAT_TABS_CUSTOM_CONFIG, MAT_TOOLTIP_CUSTOM_CONFIG } from './material.constants';
 import { MatPaginatorCustomIntl } from './material.models';
@@ -53,6 +54,7 @@ import { MatPaginatorCustomIntl } from './material.models';
     MatCheckboxModule,
     MatDatepickerModule,
     MatDialogModule,
+    MatDividerModule,
     MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
@@ -82,6 +84,7 @@ import { MatPaginatorCustomIntl } from './material.models';
     MatCheckboxModule,
     MatDatepickerModule,
     MatDialogModule,
+    MatDividerModule,
     MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
