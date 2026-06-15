@@ -17,6 +17,7 @@ import { SportEventFilterDTO, SportEventPaginatedParsedDTO } from '../../../mode
 import { ResponsiveDisplayMode } from '../../../../../shared/directives/responsive-display/responsive-display.constants';
 import { MatDialog } from '@angular/material/dialog';
 import { SportsEventsJoinDialog, SportsEventsJoinDialogData, SportsEventsJoinDialogResult } from '../../sports-events-join-dialog/sports-events-join-dialog';
+import { SportsEventsEditDialog, SportsEventsEditDialogData, SportsEventsEditDialogResult } from '../../sports-events-edit-dialog/sports-events-edit-dialog';
 import { AuthUser } from '../../../../../core/services/auth-user/auth-user';
 import { SportsEventsApiService } from '../../../services/sports-events-api.service';
 import { ToastService } from '../../../../../shared/components/toast/toast.service';
@@ -80,7 +81,7 @@ export class SportsEventsOverviewItems {
       }
 
       const isCurrentUserCreator = currentUserId != null &&
-        (event.users ?? []).some((u) => u.id === currentUserId && u.isUserCreator === true);
+        (event.users ?? []).some((u) => u.id === currentUserId && !!u.isUserCreator);
 
       const isCurrentUserSubscribed = currentUserId != null &&
         (event.users ?? []).some((u) => u.id === currentUserId);
@@ -99,6 +100,21 @@ export class SportsEventsOverviewItems {
       .afterClosed()
       .subscribe((result) => {
         if (result?.joined) {
+          this.joined.emit();
+        }
+      });
+  }
+
+  protected openEditDialog(event: SportEventPaginatedParsedDTO): void {
+    const data: SportsEventsEditDialogData = { event };
+    this.matDialog
+      .open<SportsEventsEditDialog, SportsEventsEditDialogData, SportsEventsEditDialogResult>(
+        SportsEventsEditDialog,
+        { data, width: '560px', autoFocus: false },
+      )
+      .afterClosed()
+      .subscribe((result) => {
+        if (result?.updated) {
           this.joined.emit();
         }
       });

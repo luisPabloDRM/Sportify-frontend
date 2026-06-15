@@ -41,10 +41,10 @@ export const routes: Routes = [
           const router = inject(Router);
 
           switch (true) {
-            case authUserService.hasPermission(Permission.ReadUsers):
+            case authUserService.hasPermission(Permission.ReadEventSports):
               return router.parseUrl('/dashboard/sports-events');
             default:
-              return router.parseUrl('/dashboard/profile');
+              return router.parseUrl('/dashboard/users/profile');
           }
         },
       },
@@ -56,13 +56,12 @@ export const routes: Routes = [
       {
         path: 'users',
         component: Users,
-        canActivate: [permissionGuard(Permission.ReadUsers)],
         loadChildren: () => import('./users.routes').then((m) => m.routes),
       },
       {
         path: 'sports-events',
         component: SportsEvents,
-        canActivate: [permissionGuard(Permission.ReadUsers), ],
+        canActivate: [permissionGuard(Permission.ReadEventSports)],
         loadChildren: () => import('./sports-events.routes').then((m) => m.routes),
       },
       /* 

@@ -20,11 +20,19 @@
          routerLinkActive="nav__link--active">
         Eventos
       </a>
-      <a class="nav__link"
-         routerLink="/dashboard/users"
-         routerLinkActive="nav__link--active">
-        Usuarios
-      </a>
+      @if (isAdmin) {
+        <a class="nav__link"
+           routerLink="/dashboard/users/list"
+           routerLinkActive="nav__link--active">
+          Usuarios
+        </a>
+      } @else {
+        <a class="nav__link"
+           routerLink="/dashboard/users/profile"
+           routerLinkActive="nav__link--active">
+          Mi perfil
+        </a>
+      }
     </nav>
 
     <!-- Acciones derecha -->

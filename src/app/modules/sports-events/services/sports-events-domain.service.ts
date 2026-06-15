@@ -13,6 +13,7 @@ import {
   SportEventEntityPlainDTO,
   SportEventPaginatedParsedDTO,
   SportEventPaginatedPlainDTO,
+  SportEventUpdateRawDTO,
 } from '../models/sports-events.models';
 import * as R from 'remeda';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -53,6 +54,12 @@ export class SportsEventsDomainService {
   createOne = (sportEvent: SportEventCreateRawDTO): Observable<SportEventEntityParsedDTO> => {
     return this.sportsEventsApiService
       .createOne(sportEvent)
+      .pipe(map((sportEvent) => this.transformPlainEntitytoProcessed(sportEvent)));
+  };
+
+  updateOne = (id: number, data: SportEventUpdateRawDTO): Observable<SportEventEntityParsedDTO> => {
+    return this.sportsEventsApiService
+      .updateOne(id, data)
       .pipe(map((sportEvent) => this.transformPlainEntitytoProcessed(sportEvent)));
   };
 

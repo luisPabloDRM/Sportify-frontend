@@ -1,0 +1,105 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon>edit</mat-icon>
+  Editar evento
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate id="editForm">
+
+    <mat-form-field appearance="outline" class="field-full">
+      <mat-label>Nombre del evento</mat-label>
+      <input matInput formControlName="name" placeholder="Ej. Partido de fútbol sala" maxlength="256" />
+      <mat-icon matPrefix>sports</mat-icon>
+      @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+        <mat-error>El nombre es obligatorio</mat-error>
+      }
+      @if (form.get('name')?.hasError('maxlength')) {
+        <mat-error>Máximo 256 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="field-half">
+        <mat-label>Deporte</mat-label>
+        <mat-select formControlName="sportId">
+          @for (sport of sports(); track sport.id) {
+            <mat-option [value]="sport.id">{{ sport.name }}</mat-option>
+          }
+        </mat-select>
+        <mat-icon matPrefix>fitness_center</mat-icon>
+        @if (form.get('sportId')?.hasError('required') && form.get('sportId')?.touched) {
+          <mat-error>Selecciona un deporte</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field-half">
+        <mat-label>Fecha del evento</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="eventDate" [min]="minDate" readonly />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        @if (form.get('eventDate')?.hasError('required') && form.get('eventDate')?.touched) {
+          <mat-error>La fecha es obligatoria</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="field-full">
+      <mat-label>Ubicación</mat-label>
+      <input matInput formControlName="location" placeholder="Ej. Polideportivo Municipal, Madrid" maxlength="256" />
+      <mat-icon matPrefix>location_on</mat-icon>
+      @if (form.get('location')?.hasError('required') && form.get('location')?.touched) {
+        <mat-error>La ubicación es obligatoria</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="field-half">
+        <mat-label>Mínimo de jugadores</mat-label>
+        <input matInput type="number" formControlName="minPlayers" [max]="minPlayersMax" min="1" />
+        <mat-icon matPrefix>person</mat-icon>
+        <mat-hint>Para confirmar el evento</mat-hint>
+        @if (form.get('minPlayers')?.hasError('required') && form.get('minPlayers')?.touched) {
+          <mat-error>Campo obligatorio</mat-error>
+        }
+        @if (form.get('minPlayers')?.hasError('min')) {
+          <mat-error>Mínimo 1 jugador</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field-half">
+        <mat-label>Máximo de jugadores</mat-label>
+        <input matInput type="number" formControlName="maxPlayers" min="1" />
+        <mat-icon matPrefix>groups</mat-icon>
+        <mat-hint>Número máximo de participantes</mat-hint>
+        @if (form.get('maxPlayers')?.hasError('required') && form.get('maxPlayers')?.touched) {
+          <mat-error>Campo obligatorio</mat-error>
+        }
+        @if (form.get('maxPlayers')?.hasError('min')) {
+          <mat-error>Mínimo 1 jugador</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-stroked-button type="button" (click)="cancel()" [disabled]="isLoading()">
+    Cancelar
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    form="editForm"
+    [disabled]="isLoading()"
+  >
+    @if (isLoading()) {
+      <mat-spinner diameter="18"></mat-spinner>
+      Guardando...
+    } @else {
+      <mat-icon>save</mat-icon>
+      Guardar cambios
+    }
+  </button>
+</mat-dialog-actions>

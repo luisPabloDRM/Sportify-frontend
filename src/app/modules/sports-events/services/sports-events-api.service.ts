@@ -8,6 +8,7 @@ import {
   SportEventCreateRawDTO,
   SportEventEntityPlainDTO,
   SportEventPaginatedPlainDTO,
+  SportEventUpdateRawDTO,
 } from '../models/sports-events.models';
 import { PaginationService } from '../../../shared/utils/pagination/pagination.service';
 import { Api } from '../../../core/services/api/api';
@@ -45,5 +46,9 @@ export class SportsEventsApiService {
 
   unsuscribe = (id: number) => {
     return this.httpClient.put<SportEventEntityPlainDTO>(this.getUnsuscribeRoute(id), {});
+  };
+
+  updateOne = (id: number, data: SportEventUpdateRawDTO) => {
+    return this.httpClient.put<SportEventEntityPlainDTO>(this.getOneRoute(id), data);
   };
 }

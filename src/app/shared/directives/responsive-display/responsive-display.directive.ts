@@ -25,7 +25,7 @@ export class ResponsiveDisplayDirective implements OnInit {
   public readonly mode = input<ResponsiveDisplayMode | undefined>(undefined, {
     alias: 'appResponsiveDisplay',
   });
-  public readonly breakpoint = input<number>(1024);
+  public readonly breakpoint = input<number>(768);
   protected readonly destroy$ = new Subject<void>();
 
   constructor(

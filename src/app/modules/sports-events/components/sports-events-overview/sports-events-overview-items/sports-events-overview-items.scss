@@ -4,16 +4,16 @@
   box-sizing: border-box;
   width: 100%;
   background: #ffffff;
+  border: 1.5px solid #e5e7eb;
   border-radius: 16px;
   overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
 /* ── DESKTOP TABLE ── */
 .events-table {
-  border-radius: 14px;
   overflow: hidden;
   width: 100%;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);
   --mat-table-background-color: #ffffff;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .event-row { transition: background 0.15s ease; }
-.event-row:hover { background: #f0f4ff; }
+.event-row:hover { background: #f9fafb; }
 .mat-mdc-row { border-bottom: 1px solid #f1f5f9; }
 
 .event-name {

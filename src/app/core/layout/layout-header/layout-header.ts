@@ -5,6 +5,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthUser } from '../../services/auth-user/auth-user';
 import { AuthenticationDomain } from '../../../modules/authentication/services/authentication-domain';
 import { MatMenuModule } from '@angular/material/menu';
+import { Permission } from '../../../modules/roles/constants/roles.constants';
 
 @Component({
   selector: 'app-layout-header',
@@ -20,6 +21,10 @@ export class LayoutHeader {
 
   protected get user() {
     return this.authUser.get()?.user ?? null;
+  }
+
+  protected get isAdmin(): boolean {
+    return this.authUser.hasPermission(Permission.ReadUsers);
   }
 
   /** Devuelve las iniciales del nombre completo (máx. 2 letras) */

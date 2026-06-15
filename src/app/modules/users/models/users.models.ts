@@ -45,6 +45,14 @@ export type UserPasswordUpdateDTO = {
   confirmation: string;
 };
 
+export type UserRegisterDTO = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  password: string;
+};
+
 export type UserFiltersDTO = Partial<{
   fullname: string | null;
   email: string | null;

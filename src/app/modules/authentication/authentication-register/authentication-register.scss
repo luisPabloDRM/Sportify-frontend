@@ -5,12 +5,12 @@
 }
 
 /* ── CABECERA ── */
-.login-header {
+.register-header {
   text-align: center;
   margin-bottom: 0.25rem;
 }
 
-.login-title {
+.register-title {
   font-size: 1.5rem;
   font-weight: 700;
   color: #111827;
@@ -18,7 +18,7 @@
   letter-spacing: -0.01em;
 }
 
-.login-subtitle {
+.register-subtitle {
   font-size: 0.875rem;
   color: #6b7280;
   margin: 0;
@@ -29,6 +29,12 @@ form {
   display: flex;
   flex-flow: column nowrap;
   gap: 0.25rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
 }
 
 /* ── BOTÓN ── */
@@ -46,34 +52,18 @@ form {
 /* ── PIE ── */
 footer {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
+  justify-content: center;
+  gap: 0.4rem;
   margin-top: -0.25rem;
 }
 
-.recovery-link {
-  display: inline-block;
-  font-size: 0.85rem;
-  color: #6b7280;
-  text-decoration: none;
-  transition: color 0.15s ease;
-
-  &:hover {
-    color: #111827;
-    text-decoration: underline;
-  }
-}
-
-.register-prompt {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+.footer-text {
   font-size: 0.85rem;
   color: #6b7280;
 }
 
-.register-link {
+.login-link {
   font-size: 0.85rem;
   font-weight: 600;
   color: #1d6cf0;
@@ -86,41 +76,36 @@ footer {
   }
 }
 
-/* ────────────────────────────────────────────
-   MÓVIL — inputs y botón de estilo nativo
-   ──────────────────────────────────────────── */
+/* ── MÓVIL ── */
 @media (max-width: 768px) {
-
-  /* Variables MDC que Angular Material respeta */
   :host {
-    /* Inputs redondeados, tipo iOS/Android nativo */
     --mdc-outlined-text-field-container-shape: 16px;
     --mdc-outlined-text-field-focus-outline-color: #0b84f3;
     --mdc-outlined-text-field-focus-label-text-color: #0b84f3;
     --mdc-outlined-text-field-hover-outline-color: #374151;
     --mdc-outlined-text-field-focus-outline-width: 2px;
-    /* Altura de los campos */
     --mat-form-field-container-height: 58px;
     --mat-form-field-container-vertical-padding: 18px;
-
     gap: 1rem;
   }
 
-  .login-title {
+  .register-title {
     font-size: 1.75rem;
     font-weight: 800;
     letter-spacing: -0.03em;
   }
 
-  .login-subtitle {
+  .register-subtitle {
     font-size: 0.9rem;
   }
 
-  form {
+  .form-row {
+    grid-template-columns: 1fr;
     gap: 0.5rem;
   }
 
-  /* ── Botón de acción principal ── */
+  form { gap: 0.5rem; }
+
   .submit-btn {
     height: 58px;
     font-size: 1.025rem;
@@ -128,7 +113,6 @@ footer {
     letter-spacing: 0.02em;
     margin-top: 0.5rem;
     background: linear-gradient(135deg, #1d6cf0 0%, #0b50d4 100%);
-    color: #ffffff;
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(13, 92, 220, 0.38);
     transition: box-shadow 0.2s ease, transform 0.12s ease;
@@ -145,13 +129,5 @@ footer {
     }
   }
 
-  /* ── Enlace de recuperación ── */
-  .recovery-link {
-    font-size: 0.9rem;
-    padding: 0.5rem 0;
-  }
-
-  .register-prompt, .register-link {
-    font-size: 0.9rem;
-  }
+  .footer-text, .login-link { font-size: 0.9rem; }
 }

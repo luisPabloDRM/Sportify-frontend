@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { AuthenticationLogIn } from '../../modules/authentication/authentication-log-in/authentication-log-in';
 import { AuthenticationRequestRecovery } from '../../modules/authentication/authentication-request-recovery/authentication-request-recovery';
 import { AuthenticationRecoverPassword } from '../../modules/authentication/authentication-recover-password/authentication-recover-password';
-import { Authentication } from '../../modules/authentication/authentication';
+import { AuthenticationRegister } from '../../modules/authentication/authentication-register/authentication-register';
 
 export const routes: Routes = [
   {
@@ -13,6 +13,10 @@ export const routes: Routes = [
   {
     path: 'log-in',
     component: AuthenticationLogIn,
+  },
+  {
+    path: 'register',
+    component: AuthenticationRegister,
   },
   {
     path: 'request-recovery',

@@ -13,7 +13,7 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Evento</th>
       <td mat-cell *matCellDef="let event">
-        <div class="event-name">{{ event.name }}</div>
+        <div class="event-name" [matTooltip]="event.name" matTooltipShowDelay="400">{{ event.name }}</div>
       </td>
     </ng-container>
 
@@ -95,7 +95,9 @@
           }
           @if (event.isCurrentUserCreator) {
             <mat-divider></mat-divider>
-            <button mat-menu-item><mat-icon>edit</mat-icon>Editar</button>
+            <button mat-menu-item (click)="openEditDialog(event)">
+              <mat-icon>edit</mat-icon>Editar
+            </button>
             <button mat-menu-item class="danger-item"><mat-icon>delete</mat-icon>Eliminar</button>
           }
         </mat-menu>
@@ -164,7 +166,9 @@
             }
             @if (event.isCurrentUserCreator) {
               <mat-divider></mat-divider>
-              <button mat-menu-item><mat-icon>edit</mat-icon>Editar</button>
+              <button mat-menu-item (click)="openEditDialog(event)">
+                <mat-icon>edit</mat-icon>Editar
+              </button>
               <button mat-menu-item class="danger-item"><mat-icon>delete</mat-icon>Eliminar</button>
             }
           </mat-menu>

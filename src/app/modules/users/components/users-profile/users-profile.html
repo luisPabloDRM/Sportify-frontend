@@ -1,0 +1,75 @@
+
+<div class="profile-page">
+
+  @if (loading()) {
+    <div class="loading-state">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  @if (!loading() && error()) {
+    <div class="error-state">
+      <mat-icon>error_outline</mat-icon>
+      <span>No se pudo cargar el perfil</span>
+    </div>
+  }
+
+  @if (!loading() && user(); as u) {
+    <div class="profile-card">
+
+      <!-- Avatar + nombre -->
+      <div class="profile-card__hero">
+        <div class="avatar">{{ initials }}</div>
+        <div class="hero-text">
+          <h1 class="hero-name">{{ u.fullname }}</h1>
+          <span class="role-badge" [class]="'role-' + u.roleName">
+            <mat-icon>{{ roleIcon(u.roleName) }}</mat-icon>
+            {{ u.roleName }}
+          </span>
+        </div>
+      </div>
+
+      <div class="profile-card__divider"></div>
+
+      <!-- Info -->
+      <div class="profile-card__info">
+
+        <div class="info-item">
+          <mat-icon class="info-item__icon">email</mat-icon>
+          <div class="info-item__content">
+            <span class="info-item__label">Correo electrónico</span>
+            <span class="info-item__value">{{ u.email }}</span>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <mat-icon class="info-item__icon">phone</mat-icon>
+          <div class="info-item__content">
+            <span class="info-item__label">Teléfono</span>
+            <span class="info-item__value">{{ u.phone || '—' }}</span>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <mat-icon class="info-item__icon">calendar_today</mat-icon>
+          <div class="info-item__content">
+            <span class="info-item__label">Miembro desde</span>
+            <span class="info-item__value">{{ u.createdAt.toJSDate() | date: 'dd MMMM yyyy' }}</span>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <mat-icon class="info-item__icon">verified_user</mat-icon>
+          <div class="info-item__content">
+            <span class="info-item__label">Estado de la cuenta</span>
+            <span class="status-badge" [class.status-active]="u.isEnabled" [class.status-inactive]="!u.isEnabled">
+              {{ u.isEnabled ? 'Activa' : 'Inactiva' }}
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  }
+
+</div>
