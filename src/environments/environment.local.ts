@@ -1,6 +1,6 @@
 export const environment = {
   api: {
-    url: 'http://192.168.1.55:3333/api',
+    url: 'http://192.168.1.59:3333/api',
   },
   version: '1.0.0',
   production: false,

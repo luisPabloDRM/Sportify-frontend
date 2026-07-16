@@ -9,13 +9,26 @@
 </header>
 
 @if (vm.sportEvents(); as sportsEvents) {
-  <app-sports-events-overview-items
-    [sportsEvents]="sportsEvents.data"
-    [isSendingRequest]="vm.isSendingRequest()"
-    [pagination]="vm.pagination"
-    [loading]="loading()"
-    (joined)="refresh()"
-  ></app-sports-events-overview-items>
+  <mat-tab-group class="events-tabs" animationDuration="0ms" mat-stretch-tabs="true">
+    <mat-tab label="Próximos eventos">
+      <app-sports-events-overview-items
+        [sportsEvents]="upcomingEvents()"
+        [isSendingRequest]="vm.isSendingRequest()"
+        [pagination]="vm.pagination"
+        [loading]="loading()"
+        (joined)="refresh()"
+      ></app-sports-events-overview-items>
+    </mat-tab>
+    <mat-tab label="Eventos pasados">
+      <app-sports-events-overview-items
+        [sportsEvents]="pastEvents()"
+        [isSendingRequest]="vm.isSendingRequest()"
+        [pagination]="vm.pagination"
+        [loading]="loading()"
+        (joined)="refresh()"
+      ></app-sports-events-overview-items>
+    </mat-tab>
+  </mat-tab-group>
 
   @if (sportsEvents.meta.total > vm.pagination.value.size) {
     <mat-paginator

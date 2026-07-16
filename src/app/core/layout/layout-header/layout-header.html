@@ -11,14 +11,8 @@
     <nav class="nav" [class.open]="isMenuOpen" (click)="closeMenu()">
       <a class="nav__link"
          routerLink="/dashboard"
-         routerLinkActive="nav__link--active"
-         [routerLinkActiveOptions]="{ exact: true }">
-        Inicio
-      </a>
-      <a class="nav__link"
-         routerLink="/dashboard/sports-events"
          routerLinkActive="nav__link--active">
-        Eventos
+        Inicio
       </a>
       @if (isAdmin) {
         <a class="nav__link"
@@ -51,6 +45,11 @@
             <div class="user-menu-info__name">{{ user.fullname }}</div>
             <div class="user-menu-info__email">{{ user.email }}</div>
           </div>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/dashboard/users/profile">
+            <mat-icon>person</mat-icon>
+            <span>Mi perfil</span>
+          </button>
           <mat-divider></mat-divider>
           <button mat-menu-item (click)="logOut()" class="logout-item">
             <mat-icon>logout</mat-icon>

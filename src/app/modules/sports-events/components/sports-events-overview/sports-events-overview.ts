@@ -1,5 +1,6 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { DateTime } from 'luxon';
 import { MaterialModule } from '../../../../shared/material/material.module';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,7 +21,7 @@ import { SportEntityParsedDTO } from '../../../sports/models/sports.models';
 import * as R from 'remeda';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
 import { PaginationService } from '../../../../shared/utils/pagination/pagination.service';
-import { SportEventFilterDTO } from '../../models/sports-events.models';
+import { SportEventFilterDTO, SportEventPaginatedParsedDTO } from '../../models/sports-events.models';
 import { SPORT_EVENT_FILTER_TYPES } from '../../constants/sports_events.constants';
 import { SportsEventsDomainService } from '../../services/sports-events-domain.service';
 import { EMPTY_PAGINATED_RESPONSE } from '../../../../shared/utils/pagination/pagination.constants';
@@ -105,6 +106,19 @@ export class SportsEventsOverview {
     sportEvents: toSignal(this.sportsEvents$, { requireSync: true }),
     sports: toSignal(this.sports$, { requireSync: true }),
   });
+
+  protected readonly upcomingEvents = computed(() =>
+    this.vm.sportEvents().data.filter((event) => !this.isPastEvent(event)),
+  );
+
+  protected readonly pastEvents = computed(() =>
+    this.vm.sportEvents().data.filter((event) => this.isPastEvent(event)),
+  );
+
+  private isPastEvent(event: SportEventPaginatedParsedDTO): boolean {
+    const rawDate = event.eventDate as unknown as string;
+    return DateTime.fromISO(rawDate) < DateTime.now();
+  }
 
   protected onPageChange(event: PageEvent) {
     this.pagination.paginate(event.pageIndex + 1, event.pageSize);

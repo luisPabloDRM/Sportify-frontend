@@ -77,6 +77,9 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openViewDialog(event)">
+            <mat-icon>visibility</mat-icon>Ver evento
+          </button>
           @if (!event.isCurrentUserSubscribed) {
             <button mat-menu-item (click)="openJoinDialog(event)">
               <mat-icon>person_add</mat-icon>Apuntarse
@@ -148,6 +151,9 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #mobileMenu="matMenu">
+            <button mat-menu-item (click)="openViewDialog(event)">
+              <mat-icon>visibility</mat-icon>Ver evento
+            </button>
             @if (!event.isCurrentUserSubscribed) {
               <button mat-menu-item (click)="openJoinDialog(event)">
                 <mat-icon>person_add</mat-icon>Apuntarse

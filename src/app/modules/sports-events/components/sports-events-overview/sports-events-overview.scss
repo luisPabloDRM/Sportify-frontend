@@ -29,6 +29,21 @@ header {
   gap: 1rem;
 }
 
+/* ── Tabs sobre fondo oscuro ── */
+.events-tabs {
+  width: 100%;
+
+  --mat-tab-inactive-label-text-color: rgba(255, 255, 255, 0.6);
+  --mat-tab-active-label-text-color: #f8fafc;
+  --mat-tab-active-hover-label-text-color: #f8fafc;
+  --mat-tab-active-focus-label-text-color: #f8fafc;
+  --mat-tab-inactive-hover-label-text-color: rgba(255, 255, 255, 0.8);
+  --mat-tab-inactive-focus-label-text-color: rgba(255, 255, 255, 0.8);
+  --mat-tab-active-ripple-color: rgba(255, 255, 255, 0.6);
+  --mat-tab-inactive-ripple-color: rgba(255, 255, 255, 0.6);
+  --mat-tab-active-indicator-color: #f8fafc;
+}
+
 /* ── Paginador sobre fondo oscuro ── */
 .dark-paginator {
   background: transparent;
