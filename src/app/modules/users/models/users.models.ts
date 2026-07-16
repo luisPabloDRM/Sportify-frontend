@@ -11,6 +11,7 @@ export type UserEntityPlainDTO = {
   phone: string;
   roleId: number;
   isEnabled: boolean;
+  points?: number;
   createdAt: string;
   updatedAt: string;
   role: RoleEntityPlainDTO;

@@ -18,7 +18,7 @@ import { ResponsiveDisplayMode } from '../../../../../shared/directives/responsi
 import { MatDialog } from '@angular/material/dialog';
 import { SportsEventsJoinDialog, SportsEventsJoinDialogData, SportsEventsJoinDialogResult } from '../../sports-events-join-dialog/sports-events-join-dialog';
 import { SportsEventsEditDialog, SportsEventsEditDialogData, SportsEventsEditDialogResult } from '../../sports-events-edit-dialog/sports-events-edit-dialog';
-import { SportsEventsViewDialog, SportsEventsViewDialogData } from '../../sports-events-view-dialog/sports-events-view-dialog';
+import { SportsEventsViewDialog, SportsEventsViewDialogData, SportsEventsViewDialogResult } from '../../sports-events-view-dialog/sports-events-view-dialog';
 import { AuthUser } from '../../../../../core/services/auth-user/auth-user';
 import { SportsEventsApiService } from '../../../services/sports-events-api.service';
 import { ToastService } from '../../../../../shared/components/toast/toast.service';
@@ -91,13 +91,19 @@ export class SportsEventsOverviewItems {
     });
   });
 
-  protected openViewDialog(event: SportEventPaginatedParsedDTO): void {
-    const data: SportsEventsViewDialogData = { event };
-    this.matDialog.open<SportsEventsViewDialog, SportsEventsViewDialogData>(SportsEventsViewDialog, {
-      data,
-      width: '500px',
-      autoFocus: false,
-    });
+  protected openViewDialog(event: SportEventPaginatedParsedDTO & { isCurrentUserCreator?: boolean }): void {
+    const data: SportsEventsViewDialogData = { event, isCreator: !!event.isCurrentUserCreator };
+    this.matDialog
+      .open<SportsEventsViewDialog, SportsEventsViewDialogData, SportsEventsViewDialogResult>(
+        SportsEventsViewDialog,
+        { data, width: '500px', autoFocus: false },
+      )
+      .afterClosed()
+      .subscribe((result) => {
+        if (result?.attendanceChanged) {
+          this.joined.emit();
+        }
+      });
   }
 
   protected openJoinDialog(event: SportEventPaginatedParsedDTO): void {

@@ -115,6 +115,14 @@ export class SportsEventsOverview {
     this.vm.sportEvents().data.filter((event) => this.isPastEvent(event)),
   );
 
+  protected readonly hasBothEventTypes = computed(
+    () => this.upcomingEvents().length > 0 && this.pastEvents().length > 0,
+  );
+
+  protected readonly singleListEvents = computed(() =>
+    this.pastEvents().length > 0 ? this.pastEvents() : this.upcomingEvents(),
+  );
+
   private isPastEvent(event: SportEventPaginatedParsedDTO): boolean {
     const rawDate = event.eventDate as unknown as string;
     return DateTime.fromISO(rawDate) < DateTime.now();

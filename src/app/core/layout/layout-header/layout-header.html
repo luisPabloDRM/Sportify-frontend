@@ -4,16 +4,11 @@
     <!-- Logo -->
     <a class="logo" routerLink="/dashboard" aria-label="Ir al inicio">
       <mat-icon class="logo__icon">sports</mat-icon>
-      <span class="logo__text">Sportly</span>
+      <span class="logo__text">Jugatta</span>
     </a>
 
     <!-- Nav principal -->
     <nav class="nav" [class.open]="isMenuOpen" (click)="closeMenu()">
-      <a class="nav__link"
-         routerLink="/dashboard"
-         routerLinkActive="nav__link--active">
-        Inicio
-      </a>
       @if (isAdmin) {
         <a class="nav__link"
            routerLink="/dashboard/users/list"

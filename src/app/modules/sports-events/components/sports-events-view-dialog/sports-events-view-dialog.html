@@ -65,15 +65,29 @@
     </p>
   </div>
 
-  @if (data.event.users?.length) {
+  @if (participants().length) {
     <div class="participants-section">
       <p class="participants-title">Jugadores apuntados</p>
       <div class="participants-list">
-        @for (user of data.event.users; track user.id) {
-          <span class="participant-chip">
-            <mat-icon>person</mat-icon>
-            {{ user.fullname }}
-          </span>
+        @for (participant of participants(); track participant.id) {
+          <div class="participant-row">
+            @if (data.isCreator) {
+              <mat-checkbox
+                [checked]="!!participant.attended"
+                [disabled]="markingId() === participant.id"
+                (change)="toggleAttendance(participant)"
+                matTooltip="Marcar asistencia"
+              ></mat-checkbox>
+            }
+            <span class="participant-chip" [class.participant-chip--attended]="participant.attended">
+              <mat-icon>person</mat-icon>
+              {{ participant.fullname }}
+            </span>
+            <span class="participant-points">
+              <mat-icon>stars</mat-icon>
+              {{ participant.points ?? 0 }}
+            </span>
+          </div>
         }
       </div>
     </div>

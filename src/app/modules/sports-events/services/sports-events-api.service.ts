@@ -25,6 +25,8 @@ export class SportsEventsApiService {
   private getOneRoute = (id: number) => `${this.getRootRoute()}/${id}`;
   private getSignUpRoute = (id: number) => `${this.getRootRoute()}/${id}/sing-up`;
   private getUnsuscribeRoute = (id: number) => `${this.getRootRoute()}/${id}/unsubscribe`;
+  private getAttendanceRoute = (id: number, userId: number) =>
+    `${this.getRootRoute()}/${id}/users/${userId}/attendance`;
 
   getPaginated = (pagination: PaginationValues) => {
     return this.httpClient.get<PaginatedData<SportEventPaginatedPlainDTO>>(this.getRootRoute(), {
@@ -50,5 +52,11 @@ export class SportsEventsApiService {
 
   updateOne = (id: number, data: SportEventUpdateRawDTO) => {
     return this.httpClient.put<SportEventEntityPlainDTO>(this.getOneRoute(id), data);
+  };
+
+  markAttendance = (id: number, userId: number, attended: boolean) => {
+    return this.httpClient.put<SportEventEntityPlainDTO>(this.getAttendanceRoute(id, userId), {
+      attended,
+    });
   };
 }

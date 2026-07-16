@@ -13,7 +13,12 @@ export type SportEventEntityPlainDTO = {
   sportId: number;
   sport: SportEntityParsedDTO;
   confirmed: boolean;
-  users: Array<Pick<UserEntityParsedDTO, 'id' | 'fullname'>>;
+  users: Array<
+    Pick<UserEntityParsedDTO, 'id' | 'fullname' | 'points'> & {
+      isUserCreator?: boolean;
+      attended?: boolean;
+    }
+  >;
   createdAt: string;
   updatedAt: string;
 };
@@ -53,7 +58,12 @@ export type SportEventPaginatedPlainDTO = Pick<
   'id' | 'location' | 'name' | 'eventDate' | 'sportId' | 'minPlayers' | 'maxPlayers' | 'createdAt'
 > & {
   sportName: string;
-  users: Array<Pick<UserEntityParsedDTO, 'id' | 'fullname'> & { isUserCreator?: boolean }>;
+  users: Array<
+    Pick<UserEntityParsedDTO, 'id' | 'fullname' | 'points'> & {
+      isUserCreator?: boolean;
+      attended?: boolean;
+    }
+  >;
 };
 
 export type SportEventPaginatedParsedDTO = SportEventPaginatedPlainDTO;
