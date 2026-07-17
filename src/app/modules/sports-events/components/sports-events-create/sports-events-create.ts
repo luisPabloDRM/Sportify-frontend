@@ -1,7 +1,8 @@
 import { CommonModule, Location } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -12,9 +13,19 @@ import { SportsEventsDomainService } from '../../services/sports-events-domain.s
 import { SportsDomainService } from '../../../sports/services/sports-domain.service';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { BehaviorSubject, startWith } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  of,
+  startWith,
+  switchMap,
+} from 'rxjs';
 import { SportEntityParsedDTO } from '../../../sports/models/sports.models';
 import { SportEventCreateRawDTO } from '../../models/sports-events.models';
+import { LocationSearchService } from '../../../../shared/utils/location-search/location-search.service';
+import { Coordinates } from '../../../../shared/utils/location-search/location-search.models';
 
 @Component({
   selector: 'app-sports-events-create',
@@ -31,6 +42,7 @@ export class SportsEventsCreate {
   private readonly sportsEventsDomain = inject(SportsEventsDomainService);
   private readonly sportsDomain = inject(SportsDomainService);
   private readonly toastService = inject(ToastService);
+  private readonly locationSearchService = inject(LocationSearchService);
 
   protected readonly isLoading$ = new BehaviorSubject<boolean>(false);
   protected readonly isLoading = toSignal(this.isLoading$, { requireSync: true });
@@ -58,8 +70,51 @@ export class SportsEventsCreate {
 
   protected readonly minDate = new Date();
 
+  protected readonly locatingMe = signal(false);
+  private readonly currentCoords = signal<Coordinates | null>(null);
+
+  protected readonly locationSuggestions = toSignal(
+    (this.form.get('location') as FormControl<string>).valueChanges.pipe(
+      takeUntilDestroyed(),
+      debounceTime(700),
+      distinctUntilChanged(),
+      switchMap((value) => {
+        const query = (value ?? '').trim();
+        if (query.length < 3) {
+          return of([]);
+        }
+        return this.locationSearchService
+          .search(query, this.currentCoords() ?? undefined)
+          .pipe(catchError(() => of([])));
+      }),
+    ),
+    { initialValue: [] },
+  );
+
   protected get minPlayersMax(): number {
     return this.form.get('maxPlayers')?.value ?? 99;
+  }
+
+  protected useMyLocation(): void {
+    this.locatingMe.set(true);
+    this.locationSearchService
+      .getCurrentPosition()
+      .pipe(
+        switchMap((coordinates) => {
+          this.currentCoords.set(coordinates);
+          return this.locationSearchService.reverseGeocode(coordinates);
+        }),
+      )
+      .subscribe({
+        next: (result) => {
+          this.locatingMe.set(false);
+          this.form.get('location')?.setValue(result.display_name, { emitEvent: false });
+        },
+        error: () => {
+          this.locatingMe.set(false);
+          this.toastService.error('No se pudo obtener tu ubicación');
+        },
+      });
   }
 
   protected submit() {

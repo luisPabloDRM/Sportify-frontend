@@ -1,16 +1,26 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MaterialModule } from '../../../../shared/material/material.module';
 import { SportsEventsDomainService } from '../../services/sports-events-domain.service';
 import { SportsDomainService } from '../../../sports/services/sports-domain.service';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
-import { BehaviorSubject, startWith } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  of,
+  startWith,
+  switchMap,
+} from 'rxjs';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { SportEntityParsedDTO } from '../../../sports/models/sports.models';
 import { SportEventPaginatedParsedDTO, SportEventUpdateRawDTO } from '../../models/sports-events.models';
 import { DateTime } from 'luxon';
+import { LocationSearchService } from '../../../../shared/utils/location-search/location-search.service';
+import { Coordinates } from '../../../../shared/utils/location-search/location-search.models';
 
 export type SportsEventsEditDialogData = {
   event: SportEventPaginatedParsedDTO;
@@ -31,6 +41,7 @@ export class SportsEventsEditDialog {
   private readonly domainService = inject(SportsEventsDomainService);
   private readonly sportsDomain = inject(SportsDomainService);
   private readonly toastService = inject(ToastService);
+  private readonly locationSearchService = inject(LocationSearchService);
 
   protected readonly data = inject<SportsEventsEditDialogData>(MAT_DIALOG_DATA);
 
@@ -62,8 +73,51 @@ export class SportsEventsEditDialog {
     });
   })();
 
+  protected readonly locatingMe = signal(false);
+  private readonly currentCoords = signal<Coordinates | null>(null);
+
+  protected readonly locationSuggestions = toSignal(
+    (this.form.get('location') as FormControl<string>).valueChanges.pipe(
+      takeUntilDestroyed(),
+      debounceTime(700),
+      distinctUntilChanged(),
+      switchMap((value) => {
+        const query = (value ?? '').trim();
+        if (query.length < 3) {
+          return of([]);
+        }
+        return this.locationSearchService
+          .search(query, this.currentCoords() ?? undefined)
+          .pipe(catchError(() => of([])));
+      }),
+    ),
+    { initialValue: [] },
+  );
+
   protected get minPlayersMax(): number {
     return this.form.get('maxPlayers')?.value ?? 99;
+  }
+
+  protected useMyLocation(): void {
+    this.locatingMe.set(true);
+    this.locationSearchService
+      .getCurrentPosition()
+      .pipe(
+        switchMap((coordinates) => {
+          this.currentCoords.set(coordinates);
+          return this.locationSearchService.reverseGeocode(coordinates);
+        }),
+      )
+      .subscribe({
+        next: (result) => {
+          this.locatingMe.set(false);
+          this.form.get('location')?.setValue(result.display_name, { emitEvent: false });
+        },
+        error: () => {
+          this.locatingMe.set(false);
+          this.toastService.error('No se pudo obtener tu ubicación');
+        },
+      });
   }
 
   protected submit(): void {

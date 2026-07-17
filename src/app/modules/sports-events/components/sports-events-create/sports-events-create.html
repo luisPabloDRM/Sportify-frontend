@@ -52,8 +52,33 @@
 
         <mat-form-field appearance="outline" class="field-full">
           <mat-label>Ubicación</mat-label>
-          <input matInput formControlName="location" placeholder="Ej. Polideportivo Municipal, Madrid" maxlength="256" />
+          <input
+            matInput
+            formControlName="location"
+            [matAutocomplete]="locationAuto"
+            placeholder="Ej. Polideportivo Municipal, Madrid"
+            maxlength="256"
+          />
           <mat-icon matPrefix>location_on</mat-icon>
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            [disabled]="locatingMe()"
+            (click)="useMyLocation()"
+            matTooltip="Usar mi ubicación"
+          >
+            @if (locatingMe()) {
+              <mat-spinner diameter="18"></mat-spinner>
+            } @else {
+              <mat-icon>my_location</mat-icon>
+            }
+          </button>
+          <mat-autocomplete #locationAuto="matAutocomplete">
+            @for (suggestion of locationSuggestions(); track suggestion.display_name) {
+              <mat-option [value]="suggestion.display_name">{{ suggestion.display_name }}</mat-option>
+            }
+          </mat-autocomplete>
           @if (form.get('location')?.hasError('required') && form.get('location')?.touched) {
             <mat-error>La ubicación es obligatoria</mat-error>
           }

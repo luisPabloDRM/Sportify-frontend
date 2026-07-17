@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { MaterialModule } from '../../../../../shared/material/material.module';
 import { CommonModule } from '@angular/common';
+import { DateTime } from 'luxon';
 import { MatMenuModule } from '@angular/material/menu';
 import { PaginationTableSortDirective } from '../../../../../shared/directives/pagination-table-sort/pagination-table-sort.directive';
 import { ResponsiveDisplayDirective } from '../../../../../shared/directives/responsive-display/responsive-display.directive';
@@ -87,7 +88,9 @@ export class SportsEventsOverviewItems {
       const isCurrentUserSubscribed = currentUserId != null &&
         (event.users ?? []).some((u) => u.id === currentUserId);
 
-      return { ...event, enrolled, statusLabel, statusClass, isCurrentUserCreator, isCurrentUserSubscribed };
+      const isPastEvent = DateTime.fromISO(event.eventDate as unknown as string) < DateTime.now();
+
+      return { ...event, enrolled, statusLabel, statusClass, isCurrentUserCreator, isCurrentUserSubscribed, isPastEvent };
     });
   });
 
