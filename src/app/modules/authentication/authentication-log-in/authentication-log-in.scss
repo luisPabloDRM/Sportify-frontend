@@ -43,6 +43,39 @@ form {
   border-radius: 8px;
 }
 
+/* ── DIVIDER + GOOGLE ── */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.8rem;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  span {
+    padding: 0 0.75rem;
+  }
+}
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  height: 46px;
+  width: 100%;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  color: #111827;
+}
+
 /* ── PIE ── */
 footer {
   display: flex;

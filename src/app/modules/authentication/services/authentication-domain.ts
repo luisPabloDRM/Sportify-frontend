@@ -41,6 +41,18 @@ export class AuthenticationDomain {
     );
   };
 
+  googleExchange = (code: string) => {
+    return this.authenticationApiService.googleExchange(code).pipe(
+      tap((auth) => this.authUser.set(auth)),
+      catchError((error: HttpErrorResponse) => {
+        const message =
+          error.error?.message ?? 'Error al iniciar sesión con Google. Inténtalo de nuevo.';
+        this.toastService.error(message);
+        throw error;
+      }),
+    );
+  };
+
   logOut = () => {
     this.authUser.delete();
     this.router.navigate(['/authentication', 'log-in']);

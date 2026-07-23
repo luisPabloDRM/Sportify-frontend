@@ -13,6 +13,7 @@ export class AuthenticationApi {
   private getRefreshRoute = () => `${this.getRootRoute()}/refresh`;
   private getRequestRecoveryRoute = () => `${this.getRootRoute()}/request-recovery`;
   private getPasswordRecoverRoute = () => `${this.getRootRoute()}/request-password`;
+  private getGoogleExchangeRoute = () => `${this.getRootRoute()}/google/exchange`;
 
   constructor(
     private readonly apiService: Api,
@@ -34,4 +35,8 @@ export class AuthenticationApi {
   recoverPassword = (request: PasswordRecoveryRequestDTO) => {
     return this.httpClient.post<void>(this.getPasswordRecoverRoute(), request)
   }
+
+  googleExchange = (code: string) => {
+    return this.httpClient.post<AuthLogInResponse>(this.getGoogleExchangeRoute(), { code });
+  };
 }

@@ -3,6 +3,7 @@ import { AuthenticationLogIn } from '../../modules/authentication/authentication
 import { AuthenticationRequestRecovery } from '../../modules/authentication/authentication-request-recovery/authentication-request-recovery';
 import { AuthenticationRecoverPassword } from '../../modules/authentication/authentication-recover-password/authentication-recover-password';
 import { AuthenticationRegister } from '../../modules/authentication/authentication-register/authentication-register';
+import { AuthenticationGoogleCallback } from '../../modules/authentication/authentication-google-callback/authentication-google-callback';
 
 export const routes: Routes = [
   {
@@ -25,5 +26,9 @@ export const routes: Routes = [
   {
     path: 'recover-password',
     component: AuthenticationRecoverPassword,
+  },
+  {
+    path: 'google/callback',
+    component: AuthenticationGoogleCallback,
   },
 ];
