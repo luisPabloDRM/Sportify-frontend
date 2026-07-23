@@ -1,5 +1,12 @@
 <div class="table-wrapper">
 
+  @if (!loading() && enrichedEvents().length === 0) {
+    <div class="empty-state">
+      <mat-icon>event_busy</mat-icon>
+      <span>{{ emptyMessage() }}</span>
+    </div>
+  } @else {
+
   <!-- ── DESKTOP ── -->
   <table
     class="events-table"
@@ -80,30 +87,30 @@
           <button mat-menu-item (click)="openViewDialog(event)">
             <mat-icon>visibility</mat-icon>Ver evento
           </button>
-          @if (!event.isPastEvent) {
-            @if (!event.isCurrentUserSubscribed) {
-              <button mat-menu-item (click)="openJoinDialog(event)">
-                <mat-icon>person_add</mat-icon>Apuntarse
-              </button>
-            }
-            @if (event.isCurrentUserSubscribed) {
-              <button
-                mat-menu-item
-                class="warning-item"
-                [disabled]="unsubscribingId() === event.id"
-                (click)="unsubscribe(event)"
-              >
-                <mat-icon>person_remove</mat-icon>
-                {{ unsubscribingId() === event.id ? 'Desapuntando...' : 'Desapuntarse' }}
-              </button>
-            }
+          @if (!event.isCurrentUserSubscribed) {
+            <button mat-menu-item [disabled]="event.isPastEvent" (click)="openJoinDialog(event)">
+              <mat-icon>person_add</mat-icon>Apuntarse
+            </button>
+          }
+          @if (event.isCurrentUserSubscribed) {
+            <button
+              mat-menu-item
+              class="warning-item"
+              [disabled]="event.isPastEvent || unsubscribingId() === event.id"
+              (click)="unsubscribe(event)"
+            >
+              <mat-icon>person_remove</mat-icon>
+              {{ unsubscribingId() === event.id ? 'Desapuntando...' : 'Desapuntarse' }}
+            </button>
           }
           @if (event.isCurrentUserCreator) {
             <mat-divider></mat-divider>
-            <button mat-menu-item (click)="openEditDialog(event)">
+            <button mat-menu-item [disabled]="event.isPastEvent" (click)="openEditDialog(event)">
               <mat-icon>edit</mat-icon>Editar
             </button>
-            <button mat-menu-item class="danger-item"><mat-icon>delete</mat-icon>Eliminar</button>
+            <button mat-menu-item class="danger-item" [disabled]="event.isPastEvent">
+              <mat-icon>delete</mat-icon>Eliminar
+            </button>
           }
         </mat-menu>
       </td>
@@ -156,30 +163,30 @@
             <button mat-menu-item (click)="openViewDialog(event)">
               <mat-icon>visibility</mat-icon>Ver evento
             </button>
-            @if (!event.isPastEvent) {
-              @if (!event.isCurrentUserSubscribed) {
-                <button mat-menu-item (click)="openJoinDialog(event)">
-                  <mat-icon>person_add</mat-icon>Apuntarse
-                </button>
-              }
-              @if (event.isCurrentUserSubscribed) {
-                <button
-                  mat-menu-item
-                  class="warning-item"
-                  [disabled]="unsubscribingId() === event.id"
-                  (click)="unsubscribe(event)"
-                >
-                  <mat-icon>person_remove</mat-icon>
-                  {{ unsubscribingId() === event.id ? 'Desapuntando...' : 'Desapuntarse' }}
-                </button>
-              }
+            @if (!event.isCurrentUserSubscribed) {
+              <button mat-menu-item [disabled]="event.isPastEvent" (click)="openJoinDialog(event)">
+                <mat-icon>person_add</mat-icon>Apuntarse
+              </button>
+            }
+            @if (event.isCurrentUserSubscribed) {
+              <button
+                mat-menu-item
+                class="warning-item"
+                [disabled]="event.isPastEvent || unsubscribingId() === event.id"
+                (click)="unsubscribe(event)"
+              >
+                <mat-icon>person_remove</mat-icon>
+                {{ unsubscribingId() === event.id ? 'Desapuntando...' : 'Desapuntarse' }}
+              </button>
             }
             @if (event.isCurrentUserCreator) {
               <mat-divider></mat-divider>
-              <button mat-menu-item (click)="openEditDialog(event)">
+              <button mat-menu-item [disabled]="event.isPastEvent" (click)="openEditDialog(event)">
                 <mat-icon>edit</mat-icon>Editar
               </button>
-              <button mat-menu-item class="danger-item"><mat-icon>delete</mat-icon>Eliminar</button>
+              <button mat-menu-item class="danger-item" [disabled]="event.isPastEvent">
+                <mat-icon>delete</mat-icon>Eliminar
+              </button>
             }
           </mat-menu>
         </div>
@@ -187,5 +194,7 @@
       </div>
     }
   </div>
+
+  }
 
 </div>

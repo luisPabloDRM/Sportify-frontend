@@ -10,6 +10,30 @@
   box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
+/* ── ESTADO VACÍO ── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 3.5rem 1rem;
+  color: #6b7280;
+  text-align: center;
+
+  mat-icon {
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+    color: #cbd5e1;
+  }
+
+  span {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+}
+
 /* ── DESKTOP TABLE ── */
 .events-table {
   overflow: hidden;

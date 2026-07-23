@@ -17,6 +17,7 @@
           [isSendingRequest]="vm.isSendingRequest()"
           [pagination]="vm.pagination"
           [loading]="loading()"
+          emptyMessage="No hay eventos próximos"
           (joined)="refresh()"
         ></app-sports-events-overview-items>
       </mat-tab>
@@ -26,6 +27,7 @@
           [isSendingRequest]="vm.isSendingRequest()"
           [pagination]="vm.pagination"
           [loading]="loading()"
+          emptyMessage="No hay eventos pasados"
           (joined)="refresh()"
         ></app-sports-events-overview-items>
       </mat-tab>
@@ -36,6 +38,7 @@
       [isSendingRequest]="vm.isSendingRequest()"
       [pagination]="vm.pagination"
       [loading]="loading()"
+      emptyMessage="No hay eventos para este deporte"
       (joined)="refresh()"
     ></app-sports-events-overview-items>
   }

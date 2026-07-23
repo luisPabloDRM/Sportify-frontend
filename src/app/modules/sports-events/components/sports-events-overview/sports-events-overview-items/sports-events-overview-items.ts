@@ -47,6 +47,7 @@ export class SportsEventsOverviewItems {
   readonly pagination = input.required<Pagination<SportEventFilterDTO>>();
   readonly sportsEvents = input.required<SportEventPaginatedParsedDTO[]>();
   readonly loading = input.required<boolean>();
+  readonly emptyMessage = input<string>('No hay eventos para mostrar');
 
   readonly joined = output<void>();
 
