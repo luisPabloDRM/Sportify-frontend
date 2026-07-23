@@ -26,7 +26,55 @@ header {
 .actions {
   display: flex;
   flex-flow: row nowrap;
+  align-items: center;
   gap: 1rem;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0.4rem 0.75rem;
+  transition: border-color 0.15s ease;
+
+  &:focus-within {
+    border-color: rgba(56, 189, 248, 0.5);
+  }
+
+  mat-icon {
+    font-size: 19px;
+    width: 19px;
+    height: 19px;
+    color: #64748b;
+    flex-shrink: 0;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #f8fafc;
+    font-size: 0.875rem;
+    font-family: inherit;
+    width: 180px;
+
+    &::placeholder {
+      color: #64748b;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .search-box {
+    flex: 1;
+
+    input {
+      width: 100%;
+    }
+  }
 }
 
 /* ── Tabs sobre fondo oscuro ── */

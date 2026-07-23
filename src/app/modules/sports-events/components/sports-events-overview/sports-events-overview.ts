@@ -26,6 +26,7 @@ import { SPORT_EVENT_FILTER_TYPES } from '../../constants/sports_events.constant
 import { SportsEventsDomainService } from '../../services/sports-events-domain.service';
 import { EMPTY_PAGINATED_RESPONSE } from '../../../../shared/utils/pagination/pagination.constants';
 import { SportsEventsOverviewItems } from './sports-events-overview-items/sports-events-overview-items';
+import { SearchDirective } from '../../../../shared/directives/search/search.directive';
 
 @Component({
   selector: 'app-sports-events-overview',
@@ -34,6 +35,7 @@ import { SportsEventsOverviewItems } from './sports-events-overview-items/sports
     MaterialModule,
     MatPaginatorModule,
     SportsEventsOverviewItems,
+    SearchDirective,
   ],
   templateUrl: './sports-events-overview.html',
   styleUrl: './sports-events-overview.scss',
@@ -61,6 +63,10 @@ export class SportsEventsOverview {
     SPORT_EVENT_FILTER_TYPES,
     { sortField: 'id', sortOrder: 'asc', size: 50 },
   );
+
+  /** Valor inicial del filtro por nombre (desde la URL). No se actualiza tras el primer render
+   *  para no pisar lo que el usuario esté escribiendo mientras llega la respuesta del filtro. */
+  protected readonly initialNameFilter = this.pagination.value.filters.name ?? '';
 
   private readonly refreshPagination = new Subject<void>();
 
@@ -130,6 +136,11 @@ export class SportsEventsOverview {
 
   protected onPageChange(event: PageEvent) {
     this.pagination.paginate(event.pageIndex + 1, event.pageSize);
+  }
+
+  protected onSearchByName(value: string): void {
+    const name = value.trim();
+    this.pagination.filter(name ? { name } : {});
   }
 
   protected create() {

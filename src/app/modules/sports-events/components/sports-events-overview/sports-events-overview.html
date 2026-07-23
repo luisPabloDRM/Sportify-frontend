@@ -1,6 +1,17 @@
 <header>
   <h2><strong>{{ vm.sports().name }}</strong></h2>
   <div class="actions">
+    <div class="search-box">
+      <mat-icon>search</mat-icon>
+      <input
+        appSearch
+        [delay]="400"
+        (search)="onSearchByName($event)"
+        [value]="initialNameFilter"
+        placeholder="Buscar por nombre..."
+        type="text"
+      />
+    </div>
     <a mat-raised-button (click)="create()">
       <mat-icon>add</mat-icon>
       <span>Nuevo Evento</span>
