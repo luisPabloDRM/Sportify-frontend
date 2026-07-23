@@ -1,11 +1,23 @@
 <section class="sports-section">
 
   <div class="section-header">
-    <div class="section-badge">
-      <mat-icon>sports</mat-icon>
-      <span>Deportes disponibles</span>
+    <div class="section-header__text">
+      <div class="section-badge">
+        <mat-icon>sports</mat-icon>
+        <span>Deportes disponibles</span>
+      </div>
+      <h2 class="section-title">¿Qué quieres practicar?</h2>
     </div>
-    <h2 class="section-title">¿Qué quieres practicar?</h2>
+
+    <button
+      *appRequirePermission="Permission.CreateSports"
+      mat-stroked-button
+      class="add-sport-btn"
+      (click)="openCreateSportDialog()"
+    >
+      <mat-icon>add</mat-icon>
+      <span>Añadir deporte</span>
+    </button>
   </div>
 
   <div class="sports-grid">

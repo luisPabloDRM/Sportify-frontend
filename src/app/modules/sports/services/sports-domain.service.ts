@@ -3,7 +3,7 @@ import { SportsApiService } from './sports-api.service';
 import { Domain } from '../../../core/services/domain/domain';
 import { map, Observable } from 'rxjs';
 import * as R from 'remeda';
-import { SportEntityParsedDTO, SportEntityPlainDTO } from '../models/sports.models';
+import { SportCreateRawDTO, SportEntityParsedDTO, SportEntityPlainDTO } from '../models/sports.models';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +23,12 @@ export class SportsDomainService {
   getOne = (id: number) => {
     return this.sportsApiService
       .getOne(id)
+      .pipe(map((sport) => this.trasformPlainEntityToProcessed(sport)));
+  };
+
+  createOne = (data: SportCreateRawDTO) => {
+    return this.sportsApiService
+      .createOne(data)
       .pipe(map((sport) => this.trasformPlainEntityToProcessed(sport)));
   };
 

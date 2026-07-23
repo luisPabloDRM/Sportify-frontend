@@ -11,6 +11,7 @@ export enum Permission {
   DeleteUsers = 'DELETE_USERS',
   ReadLogIns = 'READ_LOG_INS',
   ReadSports = 'READ_SPORTS',
+  CreateSports = 'WRITE_SPORTS',
   ReadEventSports = 'READ_EVENT_SPORTS',
   WriteEventSports = 'WRITE_EVENT_SPORTS',
   DeleteEventSports = 'DELETE_EVENT_SPORTS',

@@ -13,7 +13,9 @@ export type SportEntityParsedDTO = Omit<SportEntityPlainDTO, 'createdAt' | 'upda
     updatedAt: DateTime;
 }
 
-// export type SportCreateRawDTO = Pick<SportEntityDTO, 'name' | 'icon'>
+export type SportCreateRawDTO = {
+  name: string;
+}
 
 export type SportFiltersDTO = Partial<{
   id: number

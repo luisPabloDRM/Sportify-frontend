@@ -1,0 +1,31 @@
+.dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.dialog-content {
+  min-width: 420px;
+  padding-top: 8px;
+  box-sizing: border-box;
+}
+
+.field-full {
+  width: 100%;
+  display: block;
+}
+
+.dialog-actions {
+  gap: 8px;
+  padding: 16px 24px;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 130px;
+    justify-content: center;
+  }
+}

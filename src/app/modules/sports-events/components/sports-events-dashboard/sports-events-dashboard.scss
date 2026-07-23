@@ -11,7 +11,21 @@
 }
 
 .section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
   margin-bottom: 2.5rem;
+}
+
+.add-sport-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.25);
+  white-space: nowrap;
 }
 
 .section-badge {
@@ -187,7 +201,14 @@
   }
 
   .section-header {
+    flex-direction: column;
+    align-items: flex-start;
     margin-bottom: 1.5rem;
+  }
+
+  .add-sport-btn {
+    width: 100%;
+    justify-content: center;
   }
 
   .section-title {

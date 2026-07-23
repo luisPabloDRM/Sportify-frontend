@@ -1,0 +1,43 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon>sports</mat-icon>
+  Añadir deporte
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate id="createSportForm">
+
+    <mat-form-field appearance="outline" class="field-full">
+      <mat-label>Nombre del deporte</mat-label>
+      <input matInput formControlName="name" placeholder="Ej. Pádel" maxlength="256" />
+      <mat-icon matPrefix>sports</mat-icon>
+      @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+        <mat-error>El nombre es obligatorio</mat-error>
+      }
+      @if (form.get('name')?.hasError('maxlength')) {
+        <mat-error>Máximo 256 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-stroked-button type="button" (click)="cancel()" [disabled]="isLoading()">
+    Cancelar
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    form="createSportForm"
+    [disabled]="isLoading()"
+  >
+    @if (isLoading()) {
+      <mat-spinner diameter="18"></mat-spinner>
+      Creando...
+    } @else {
+      <mat-icon>add</mat-icon>
+      Crear deporte
+    }
+  </button>
+</mat-dialog-actions>

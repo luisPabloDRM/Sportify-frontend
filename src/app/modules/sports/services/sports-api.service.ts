@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Api } from '../../../core/services/api/api';
 import { HttpClient } from '@angular/common/http';
-import { SportEntityPlainDTO } from '../models/sports.models';
+import { SportCreateRawDTO, SportEntityPlainDTO } from '../models/sports.models';
 
 @Injectable({
   providedIn: 'root',
@@ -20,4 +20,8 @@ export class SportsApiService {
   getOne = (id: number) => {
     return this.httpClient.get<SportEntityPlainDTO>(this.getOneRoute(id))
   }
+
+  createOne = (data: SportCreateRawDTO) => {
+    return this.httpClient.post<SportEntityPlainDTO>(this.getRootRoute(), data);
+  };
 }
