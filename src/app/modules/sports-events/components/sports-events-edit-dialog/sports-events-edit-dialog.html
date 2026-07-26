@@ -123,8 +123,10 @@
       <mat-spinner diameter="18"></mat-spinner>
       Guardando...
     } @else {
-      <mat-icon>save</mat-icon>
-      Guardar cambios
+      <ng-container>
+        <mat-icon>save</mat-icon>
+        Guardar cambios
+      </ng-container>
     }
   </button>
 </mat-dialog-actions>

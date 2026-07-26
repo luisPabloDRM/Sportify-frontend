@@ -27,6 +27,39 @@
     <!-- Acciones derecha -->
     <div class="header-right">
 
+      <!-- Campana de notificaciones -->
+      @if (user) {
+        <button class="notif-btn" [matMenuTriggerFor]="notifMenu" (menuOpened)="onNotifMenuOpened()" aria-label="Notificaciones">
+          <mat-icon [matBadge]="unreadCount() || null" matBadgeColor="warn" matBadgeSize="small">notifications</mat-icon>
+        </button>
+
+        <mat-menu #notifMenu="matMenu" xPosition="before" class="notif-menu">
+          <div class="notif-menu-header" (click)="$event.stopPropagation()">
+            <span>Notificaciones</span>
+            <button mat-button (click)="markAllAsRead($event)" [disabled]="unreadCount() === 0">
+              Marcar todas como leídas
+            </button>
+          </div>
+          <mat-divider></mat-divider>
+          @if (notifications().length === 0) {
+            <div class="notif-empty">No tienes notificaciones</div>
+          } @else {
+            @for (notification of notifications(); track notification.id) {
+              <button
+                mat-menu-item
+                class="notif-item"
+                [class.unread]="!notification.read"
+                (click)="onNotificationClick(notification)"
+              >
+                <mat-icon>{{ iconFor(notification.type) }}</mat-icon>
+                <span class="notif-item__text">{{ notification.message }}</span>
+                <span class="notif-item__time">{{ relativeTime(notification.createdAt) }}</span>
+              </button>
+            }
+          }
+        </mat-menu>
+      }
+
       <!-- Avatar / menú usuario -->
       @if (user) {
         <button class="user-btn" [matMenuTriggerFor]="userMenu" aria-label="Menú de usuario">

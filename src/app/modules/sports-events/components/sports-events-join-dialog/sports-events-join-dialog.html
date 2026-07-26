@@ -65,7 +65,7 @@
     </p>
   </div>
 
-  @if (data.event.users?.length) {
+  @if (data.event.users.length) {
     <div class="participants-section">
       <p class="participants-title">Participantes apuntados</p>
       <div class="participants-list">
@@ -100,8 +100,10 @@
       <mat-spinner diameter="18"></mat-spinner>
       Apuntando...
     } @else {
-      <mat-icon>person_add</mat-icon>
-      Apuntarse
+      <ng-container>
+        <mat-icon>person_add</mat-icon>
+        Apuntarse
+      </ng-container>
     }
   </button>
 </mat-dialog-actions>
