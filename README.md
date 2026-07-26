@@ -21,7 +21,7 @@ Abre `http://localhost:4200/`. La app recarga automáticamente al modificar el c
 
 ### Configuración de entorno
 
-`src/environments/environment.local.ts` define la URL del backend:
+`src/environments/environment.ts` define la URL del backend (usado por `ng serve` y por defecto en dev):
 
 ```ts
 export const environment = {
@@ -78,3 +78,11 @@ ng serve          # servidor de desarrollo
 ng build          # build de producción en dist/
 ng test           # tests unitarios (Karma)
 ```
+
+## Despliegue en Railway
+
+Es un SPA puramente estático: no hay servidor Node en runtime, todo se sirve como archivos ya compilados (el paquete `serve` dentro del contenedor solo reparte esos estáticos y hace el fallback de rutas a `index.html` que necesita el router de Angular).
+
+1. `ng build` usa la configuración `production` por defecto, que aplica `fileReplacements` para sustituir `src/environments/environment.ts` por `src/environments/environment.prod.ts` — **antes del primer build de producción, edita `environment.prod.ts` con la URL pública real del backend** (`api.url`). Como el valor se hornea en build time, cualquier cambio posterior de esa URL requiere volver a construir y desplegar.
+2. **Crear el servicio en Railway** apuntando a este repo de GitHub — detecta el `Dockerfile` de la raíz automáticamente, no hace falta configurar build command ni variables de entorno en runtime.
+3. Una vez desplegado, copiar la URL pública que asigna Railway y usarla para actualizar `FRONTEND_URL` y `GOOGLE_CALLBACK_URL` en el servicio del backend (ver [readme del backend](../Sportify-backend/readme.md#despliegue-en-railway)).
